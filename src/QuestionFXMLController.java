@@ -7,12 +7,11 @@
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 
 /**
  * FXML Controller class
@@ -24,63 +23,63 @@ public class QuestionFXMLController implements Initializable {
     /**
      * Initializes the controller class.
      */
-    @FXML
-    Pane paneQuestion;
+    
     @FXML
     TextArea questionArea;
-    @FXML
-    Pane paneA;
+   
     @FXML
     TextField questionATextField;
-    @FXML
-    Pane paneB;
+  
     @FXML
     TextField questionBTextField;
-    @FXML
-    Pane paneC;
+   
     @FXML
     TextField questionCTextField;
-    @FXML
-    Pane paneD;
+  
     @FXML
     TextField questionDTextField;
-    @FXML
-    Pane paneE;
+    
     @FXML
     TextField questionETextField;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        
+    }
+
+    public void setQuestion(StringProperty question) {
+
+        questionArea.setText(question.getValue());
+        question.bind(questionArea.textProperty());
+    }
+
+    public void setOptionA(StringProperty optionA) {
+
+        questionATextField.setText(optionA.getValue());
+        optionA.bind(questionATextField.textProperty());
+    }
+
+    public void setOptionB(StringProperty optionB) {
+        questionBTextField.setText(optionB.getValue());
+        optionB.bind(questionBTextField.textProperty());
 
     }
 
-    public void setQuestion(String question) {
+    public void setOptionC(StringProperty optionC) {
 
-        questionArea.setText(question);
+        questionCTextField.setText(optionC.getValue());
+        optionC.bind(questionCTextField.textProperty());
     }
 
-    public void setOptionA(String optionA) {
-
-        questionATextField.setText(optionA);
+    public void setOptionD(StringProperty optionD) {
+        questionDTextField.setText(optionD.getValue());
+        optionD.bind(questionDTextField.textProperty());
     }
 
-    public void setOptionB(String optionB) {
-        questionBTextField.setText(optionB);
-
-    }
-
-    public void setOptionC(String optionC) {
-
-        questionCTextField.setText(optionC);
-    }
-
-    public void setOptionD(String optionD) {
-        questionDTextField.setText(optionD);
-    }
-
-    public void setOptionE(String optionE) {
-        questionETextField.setText(optionE);
+    public void setOptionE(StringProperty optionE) {
+        questionETextField.setText(optionE.getValue());
+        optionE.bind(questionETextField.textProperty());
     }
 
     public String getQuestion() {

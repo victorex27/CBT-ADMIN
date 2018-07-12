@@ -44,12 +44,12 @@
             <Button mnemonicParsing="false" prefHeight="57.0" prefWidth="154.0" style="-fx-background-color: #012333; -fx-border-color: #fff;" text="Courses" textFill="#eeecec" GridPane.columnIndex="1" />
          </children>
       </GridPane>
-      <Pane fx:id="rightPane" layoutX="235.0" layoutY="247.0" prefHeight="371.0" prefWidth="788.0">
+      <Pane fx:id="rightPane" layoutX="272.0" layoutY="247.0" prefHeight="371.0" prefWidth="751.0">
          <children>
-            <StackPane prefHeight="371.0" prefWidth="552.0">
+            <StackPane fx:id="stackPane" prefHeight="371.0" prefWidth="619.0">
                <children>
                   <VBox fx:id="vBox" prefHeight="413.0" prefWidth="552.0" />
-                  <Pane fx:id="dragPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;" visible="false">
+                  <Pane fx:id="dragPane" prefHeight="371.0" prefWidth="696.0" style="-fx-background-color: transparent;" visible="false">
                      <children>
                         <Button layoutX="189.0" layoutY="166.0" mnemonicParsing="false" onDragDropped="#onCustomDragEvent" onDragOver="#onCustomDragOver" prefHeight="168.0" prefWidth="175.0" style="-fx-border-color: #fff; -fx-background-color: transparent; -fx-border-width: 3px; -fx-border-style: dotted; -fx-border-radius: 3em;">
                            <graphic>
@@ -72,10 +72,12 @@
                               <Font size="29.0" />
                            </font>
                         </Label>
+                        <ListView fx:id="listView" prefHeight="371.0" prefWidth="620.0" visible="false" />
                      </children>
                   </Pane>
                </children>
             </StackPane>
+            <Button fx:id="saveToDbButtuon" layoutX="664.0" layoutY="301.0" mnemonicParsing="false" onAction="#saveToDB" text="Save" />
          </children>
       </Pane>
     </children>

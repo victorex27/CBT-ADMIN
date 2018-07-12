@@ -1,6 +1,9 @@
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,6 +15,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.tika.exception.TikaException;
+import org.apache.tika.metadata.Metadata;
+import org.apache.tika.parser.AutoDetectParser;
+import org.apache.tika.sax.BodyContentHandler;
+import org.xml.sax.SAXException;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -36,8 +44,9 @@ public class Teacher extends Person {
     private ArrayList<Question> allQuestions;
     // this is the minimum number of options
     private final static int NO_OF_OPTIONS = 3;
+    
+    private int id;
 
-    private static AtomicInteger atomicInteger = new AtomicInteger(0);
 
     public Teacher() {
 
@@ -46,8 +55,12 @@ public class Teacher extends Person {
          *
          */
         ALLOWEDEXTENSION.add("csv");
+        ALLOWEDEXTENSION.add("doc");
+        ALLOWEDEXTENSION.add("docx");
+        ALLOWEDEXTENSION.add("pdf");
+        ALLOWEDEXTENSION.add("txt");
 
-        allQuestions = new ArrayList();
+        
 
     }
 
@@ -77,81 +90,36 @@ public class Teacher extends Person {
     }
 
     //this is called when the Teacher is about to set the exam questions.
-    public boolean setExam(String subject, String uri) throws Exception {
+    public boolean setExam(Course course, String uri) throws Exception {
 
+        allQuestions = new ArrayList();
+        
         File file = new File(uri);
 
         isFormatValid(uri);
 
         isFileValid(file);
 
-        try (Scanner scanner = new Scanner(file)) {
-
-            while (scanner.hasNext()) {
-
-                int count = 0;
-
-                //Question q = null;
-                String questionText = null;
-                String optionA = null;
-                String optionB = null;
-                String optionC = null;
-                String optionD = null;
-                String optionE = null;
-
-                //Question q = new Question.Builder(question, a, b).build();
-                List<String> line = parseLine(scanner.nextLine());
-                int size = line.size();
-                if (size - 1 < NO_OF_OPTIONS) {
-                    throw new Exception("Your Options must be More than three");
-                }
-                while (count < size) {
-
-                    switch (count) {
-
-                        case 0:
-                            questionText = line.get(count);
-                            break;
-                        case 1:
-                            optionA = line.get(count);
-                            break;
-                        case 2:
-                            optionB = line.get(count);
-                            break;
-                        case 3:
-                            optionC = line.get(count);
-                            break;
-                        case 4:
-                            optionD = line.get(count);
-                            break;
-                        case 5:
-                            optionE = line.get(count);
-                            break;
-
-                    }
-
-                    count++;
-                }
-
-                Question q  = new Question.Builder(questionText, optionA, optionB).addC(optionC).addD(optionD).addE(optionE).build();
-                allQuestions.add(q);
-
-            }
-        }
-
-        addToDatabase(/*Question q */);
+        parseDataObject(uri);
+        
+        id = course.getId();
+        
+        
+        //addToDatabase();
         return true;
     }
 
-    private PreparedStatement setQueryValues(PreparedStatement pStatement) {
+    private PreparedStatement setQueryValues(int id, PreparedStatement pStatement) {
 
+    AtomicInteger atomicInteger = new AtomicInteger(0);
+        
         allQuestions.forEach((Question q) -> {
 
             int a = 7 * atomicInteger.getAndIncrement();
 
             try {
-               
-                pStatement.setInt(a + 1, 1);
+
+                pStatement.setInt(a + 1, id);
                 pStatement.setString(a + 2, q.getQuestion());
                 pStatement.setString(a + 3, q.getA());
                 pStatement.setString(a + 4, q.getB());
@@ -169,15 +137,14 @@ public class Teacher extends Person {
 
     }
 
-    private void addToDatabase(/*Question q */) throws SQLException {
+    public void addToDatabase() throws SQLException {
 
+        
         try {
             int sizeOfQuestion = allQuestions.size();
-            if (sizeOfQuestion < 1) {
+            if (sizeOfQuestion < 1 ) {
                 throw new Exception("Invalid Operation");
             }
-
-           
 
             String sqlQuery = "INSERT INTO exam_question(teacher_id, question, a, b, c, d, e) VALUES (?,?,?,?,?,?,?) ";
 
@@ -191,111 +158,16 @@ public class Teacher extends Person {
             connection = SimpleConnection.getConnection();
             PreparedStatement pStatement = connection.prepareStatement(sqlQuery);
 
-            pStatement = setQueryValues(pStatement);
-            System.out.println(""+pStatement.executeUpdate());
-
-            
-                
+            pStatement = setQueryValues(id, pStatement);
+            pStatement.executeUpdate();
 
         } catch (Exception ex) {
             Logger.getLogger(Teacher.class.getName()).log(Level.SEVERE, null, ex);
-            
-        }finally{
-        
+
+        } finally {
+
             connection.close();
         }
-    }
-
-    private static List<String> parseLine(String cvsLine) {
-        return parseLine(cvsLine, DEFAULT_SEPARATOR, DEFAULT_QUOTE);
-    }
-
-    private static List<String> parseLine(String cvsLine, char separators) {
-        return parseLine(cvsLine, separators, DEFAULT_QUOTE);
-    }
-
-    private static List<String> parseLine(String cvsLine, char separators, char customQuote) {
-
-        List<String> result = new ArrayList<>();
-
-        //if empty, return!
-        if (cvsLine == null && cvsLine.isEmpty()) {
-            return result;
-        }
-
-        if (customQuote == ' ') {
-            customQuote = DEFAULT_QUOTE;
-        }
-
-        if (separators == ' ') {
-            separators = DEFAULT_SEPARATOR;
-        }
-
-        StringBuffer curVal = new StringBuffer();
-        boolean inQuotes = false;
-        boolean startCollectChar = false;
-        boolean doubleQuotesInColumn = false;
-
-        char[] chars = cvsLine.toCharArray();
-
-        for (char ch : chars) {
-
-            if (inQuotes) {
-                startCollectChar = true;
-                if (ch == customQuote) {
-                    inQuotes = false;
-                    doubleQuotesInColumn = false;
-                } else {
-
-                    //Fixed : allow "" in custom quote enclosed
-                    if (ch == '\"') {
-                        if (!doubleQuotesInColumn) {
-                            curVal.append(ch);
-                            doubleQuotesInColumn = true;
-                        }
-                    } else {
-                        curVal.append(ch);
-                    }
-
-                }
-            } else {
-                if (ch == customQuote) {
-
-                    inQuotes = true;
-
-                    //Fixed : allow "" in empty quote enclosed
-                    if (chars[0] != '"' && customQuote == '\"') {
-                        curVal.append('"');
-                    }
-
-                    //double quotes in column will hit this!
-                    if (startCollectChar) {
-                        curVal.append('"');
-                    }
-
-                } else if (ch == separators) {
-
-                    result.add(curVal.toString());
-
-                    curVal = new StringBuffer();
-                    startCollectChar = false;
-
-                } else if (ch == '\r') {
-                    //ignore LF characters
-                    continue;
-                } else if (ch == '\n') {
-                    //the end, break!
-                    break;
-                } else {
-                    curVal.append(ch);
-                }
-            }
-
-        }
-
-        result.add(curVal.toString());
-
-        return result;
     }
 
     public ArrayList<Course> getCourses() throws SQLException, ClassNotFoundException, Exception {
@@ -338,4 +210,97 @@ public class Teacher extends Person {
     public ArrayList<Question> getAllQuestions() {
         return allQuestions;
     }
+
+    private void parseDataObject(String uri) throws IOException, SAXException, TikaException {
+
+        AutoDetectParser parser = new AutoDetectParser();
+        BodyContentHandler handler = new BodyContentHandler();
+        Metadata metadata = new Metadata();
+        try (InputStream stream = new FileInputStream(uri)) {
+
+            parser.parse(stream, handler, metadata);
+
+            parseString(handler.toString(), "\n");
+            //return handler.toString();
+
+        }
+    }
+
+    private ArrayList<String> parseString(String value, String regex) {
+
+        String[] wordsArray;
+
+        wordsArray = value.split(regex);
+
+        boolean flag = true;
+        int count = 0;
+
+        String questionText = null;
+        String optionA = null;
+        String optionB = null;
+        String optionC = null;
+        String optionD = null;
+        String optionE = null;
+
+        System.out.println("Parsing questions.....");
+
+        for (String w : wordsArray) {
+
+            if (!w.trim().isEmpty()) {
+
+                switch (count) {
+
+                    case 0:
+
+                        flag = false;
+                        questionText = w;
+                        count++;
+                        break;
+                    case 1:
+                        optionA = w;
+                        count++;
+                        break;
+                    case 2:
+                        optionB = w;
+                        count++;
+                        break;
+                    case 3:
+                        optionC = w;
+                        count++;
+                        break;
+                    case 4:
+                        optionD = w;
+                        count++;
+                        break;
+                    case 5:
+                        optionE = w;
+                        count++;
+
+                        break;
+
+                }
+
+                //System.out.println("A: " + w);
+            } else {
+
+                if (!flag) {
+
+                   
+                    
+                    Question q = new Question.Builder(questionText, optionA, optionB).addC(optionC).addD(optionD).addE(optionE).build();
+                    allQuestions.add(q);
+
+                }
+
+                flag = true;
+                count = 0;
+
+            }
+
+        }
+
+        return null;
+
+    }
+
 }
