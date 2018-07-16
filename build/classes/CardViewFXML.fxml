@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#onMouseClicked" prefHeight="150.0" prefWidth="150.0" styleClass="anchorPane" stylesheets="@cardviewfxml.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CardViewFXMLController">
+   <children>
+      <Pane layoutX="110.0" layoutY="65.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <ImageView fitHeight="95.0" fitWidth="124.0" layoutX="28.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@image/book.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="courseCode" alignment="CENTER" contentDisplay="CENTER" layoutX="46.0" layoutY="83.0" text="Label" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
+            <Label fx:id="courseTitle" alignment="CENTER" contentDisplay="CENTER" layoutX="32.0" layoutY="119.0" maxHeight="-Infinity" maxWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" opacity="0.85" prefWidth="102.0" text="Label" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" wrapText="true" />
+         </children>
+      </Pane>
+   </children>
+   <effect>
+      <DropShadow />
+   </effect>
+   <cursor>
+      <Cursor fx:constant="HAND" />
+   </cursor>
+</AnchorPane>

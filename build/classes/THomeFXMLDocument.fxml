@@ -15,33 +15,39 @@
     </stylesheets>
     <children>
         <fx:include source="FrameFXML.fxml" />
-      <Label layoutX="66.0" layoutY="180.0" text="Welcome" textFill="#f8f3f3">
+      <Label layoutX="66.0" layoutY="180.0" opacity="0.66" prefHeight="64.0" prefWidth="146.0" text="Welcome" textFill="WHITE">
          <font>
             <Font size="31.0" />
          </font>
       </Label>
-      <Label fx:id="fullName" layoutX="235.0" layoutY="203.0" text="amama" textFill="#f8f8f8">
+      <Label fx:id="fullName" layoutX="220.0" layoutY="189.0" opacity="0.66" textFill="#f8f8f8">
          <font>
-            <Font name="System Italic" size="16.0" />
+            <Font name="System Italic" size="31.0" />
          </font>
       </Label>
-      <GridPane layoutX="12.0" layoutY="247.0" prefHeight="291.0" prefWidth="219.0">
+      <GridPane layoutX="12.0" layoutY="247.0" prefHeight="291.0" prefWidth="161.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="105.0" minWidth="10.0" prefWidth="67.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="161.0" minWidth="10.0" prefWidth="152.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="161.0" minWidth="10.0" prefWidth="82.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints maxHeight="119.0" minHeight="10.0" prefHeight="36.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="183.0" minHeight="10.0" prefHeight="174.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="119.0" minHeight="10.0" prefHeight="84.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="183.0" minHeight="10.0" prefHeight="124.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="83.0" minHeight="10.0" prefHeight="83.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <ImageView fitHeight="49.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+            <Button mnemonicParsing="false" prefHeight="77.0" prefWidth="161.0" text="Course" textFill="#fcfcfc">
+               <font>
+                  <Font size="23.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <ImageView fitHeight="49.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@image/list.png" />
                </image>
             </ImageView>
-            <Button mnemonicParsing="false" prefHeight="57.0" prefWidth="154.0" style="-fx-background-color: #012333; -fx-border-color: #fff;" text="Courses" textFill="#eeecec" GridPane.columnIndex="1" />
          </children>
       </GridPane>
       <Pane fx:id="rightPane" layoutX="272.0" layoutY="247.0" prefHeight="371.0" prefWidth="751.0">
@@ -51,7 +57,7 @@
                   <VBox fx:id="vBox" prefHeight="413.0" prefWidth="552.0" />
                   <Pane fx:id="dragPane" prefHeight="371.0" prefWidth="696.0" style="-fx-background-color: transparent;" visible="false">
                      <children>
-                        <Button layoutX="189.0" layoutY="166.0" mnemonicParsing="false" onDragDropped="#onCustomDragEvent" onDragOver="#onCustomDragOver" prefHeight="168.0" prefWidth="175.0" style="-fx-border-color: #fff; -fx-background-color: transparent; -fx-border-width: 3px; -fx-border-style: dotted; -fx-border-radius: 3em;">
+                        <Button layoutX="189.0" layoutY="166.0" mnemonicParsing="false" onDragDropped="#onCustomDragEvent" onDragOver="#onCustomDragOver" prefHeight="168.0" prefWidth="175.0" style="-fx-border-color: #fff; -fx-background-color: transparent; -fx-border-width: 3px; -fx-border-style: solid;">
                            <graphic>
                               <ImageView fitHeight="152.0" fitWidth="248.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -77,7 +83,13 @@
                   </Pane>
                </children>
             </StackPane>
-            <Button fx:id="saveToDbButtuon" layoutX="664.0" layoutY="301.0" mnemonicParsing="false" onAction="#saveToDB" text="Save" />
+            <Button fx:id="saveToDbButtuon" layoutX="627.0" layoutY="301.0" mnemonicParsing="false" onAction="#saveToDB" prefHeight="56.0" prefWidth="99.0" styleClass="whiteButton" text="Save" textFill="#f2f2f2" visible="false">
+               <font>
+                  <Font size="17.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
          </children>
       </Pane>
     </children>

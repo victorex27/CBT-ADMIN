@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.geometry.*?>
 <?import java.lang.*?>
@@ -16,21 +17,24 @@
    <children>
       <Pane prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: white;">
          <children>
-            <Pane prefHeight="127.0" prefWidth="1024.0" style="-fx-background-color: #03A9FA;">
+            <Pane prefHeight="135.0" prefWidth="1024.0" styleClass="header">
                <children>
                   <Button fx:id="closeButton" layoutX="978.0" layoutY="8.0" mnemonicParsing="false" onAction="#shutDownApp" style="-fx-background-color: transparent;">
                      <graphic>
-                        <ImageView fitHeight="30.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="30.0" fitWidth="42.0" opacity="0.72" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../image/close.png" />
+                              <Image url="@image/close.png" />
                            </image>
                         </ImageView>
                      </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                </children>
             </Pane>
-            <Pane layoutY="134.0" prefHeight="486.0" prefWidth="1024.0" style="-fx-background-color: #00344D;" styleClass="whiteTopPane" />
-            <Pane layoutY="618.0" prefHeight="150.0" prefWidth="1024.0" style="-fx-background-color: #03A9FA;" />
+            <Pane layoutY="134.0" prefHeight="486.0" prefWidth="1024.0" styleClass="mainPane" />
+            <Pane layoutY="618.0" prefHeight="150.0" prefWidth="1024.0" styleClass="footer" />
          </children>
       </Pane>
    </children>

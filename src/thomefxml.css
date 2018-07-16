@@ -5,3 +5,17 @@
 .mainFxmlClass {
 
 }
+
+.button{
+    
+    -fx-background-color: linear-gradient(to bottom, #012398, #012333);
+   
+}
+
+.whiteButton{
+    
+    -fx-border-color: #fff;
+    -fx-border-style: solid;
+    -fx-border-width: 2px;
+    -fx-border-radius: .8em;
+}

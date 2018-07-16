@@ -38,6 +38,13 @@ import javafx.stage.Stage;
  *
  * @author USER
  */
+
+/**
+ * The Vbox is on a stackpane with a Pane
+ * The Pane contains the upload button and the drag and drop
+ * the vbox contains the list of the subjects which is clickable to take you to the Pane
+ * 
+ * */
 public class THomeFXMLDocumentController implements Initializable {
 
     /**
@@ -122,17 +129,29 @@ public class THomeFXMLDocumentController implements Initializable {
 
             Hyperlink link = new Hyperlink();
 
-            link.setText(a.getCourseCode());
-            link.setOnAction(e -> {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("CardViewFXML.fxml"));
 
-                setCurrentCourse(a);
-                dragPane.setVisible(true);
-                vBox.setVisible(false);
-                
-            });
+            try {
+                AnchorPane anchorPane = (AnchorPane) loader.load();
+                CardViewFXMLController controller = loader.getController();
 
-            vBox.getChildren().add(link);
+                controller.setContents(a.getCourseCode(), a.getCourseTitle());
+                vBox.getChildren().add(anchorPane);
 
+                anchorPane.setOnMouseClicked(e -> {
+
+                    setCurrentCourse(a);
+                    dragPane.setVisible(true);
+                    vBox.setVisible(false);
+
+                });
+
+            } catch (IOException ex) {
+                Logger.getLogger(THomeFXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            
+        
         });
 
     }
