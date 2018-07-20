@@ -112,6 +112,9 @@ public class THomeFXMLDocumentController implements Initializable {
                 filePath = file.getAbsolutePath();
 
             });
+            
+            
+            
             showTeacherView(teacher);
 
         } catch (Exception ex) {
@@ -125,6 +128,15 @@ public class THomeFXMLDocumentController implements Initializable {
      */
     private void showTeacherView(Teacher teacher) throws ClassNotFoundException, Exception {
 
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("StudentListFXML.fxml"));
+        AnchorPane anchorPane = (AnchorPane) loader.load();
+                StudentListFXMLController controller = loader.getController();
+                controller.setStudentList(2);
+                //controller.setCourseid(1);
+                vBox.getChildren().add(anchorPane);
+                
+        
+        /*
         teacher.getCourses().forEach(a -> {
 
             Hyperlink link = new Hyperlink();
@@ -153,6 +165,8 @@ public class THomeFXMLDocumentController implements Initializable {
             
         
         });
+        
+        */
 
     }
 
@@ -236,6 +250,7 @@ public class THomeFXMLDocumentController implements Initializable {
                 AnchorPane anchorPane = (AnchorPane) loader.load();
                 QuestionFXMLController controller = loader.getController();
 
+                controller.setQuestionObject(e);
                 controller.setQuestion(e.getQuestionProperty());
                 controller.setOptionA(e.getAProperty());
                 controller.setOptionB(e.getBProperty());

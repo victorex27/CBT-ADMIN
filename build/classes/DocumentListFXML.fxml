@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane id="Pane" prefHeight="38.0" prefWidth="480.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DocumentListFXMLController">
+    <stylesheets>
+        <URL value="@documentlistfxml.css" />
+    </stylesheets>
+   <children>
+      <Label fx:id="label" layoutX="14.0" layoutY="11.0" text="Label" />
+      <Button layoutX="445.0" layoutY="3.0" mnemonicParsing="false" onAction="#onDelete" style="-fx-background-color: transparent;">
+         <graphic>
+            <ImageView fitHeight="25.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@image/delete.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+   </children>
+</Pane>

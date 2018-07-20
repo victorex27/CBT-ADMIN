@@ -19,20 +19,26 @@ public class Student extends Person{
     
    
     private String department;
+    private int currentLevel;
     private ArrayList<Course> listOfCourses;
     private Connection connection;
     
-    public Student() throws ClassNotFoundException, Exception{
+    public Student(String id,String firstName,String middleName,String lastName, String department ,int currentLevel) throws ClassNotFoundException, Exception{
     
         //super();
+        setId(id);
+        setLastName(lastName);
+        setFirstName(firstName);
+        
+        this.currentLevel = currentLevel;
+        
+        setMiddleName(middleName);
+        this.department = department;
         listOfCourses = new ArrayList<>();
         
     }
     
-    //this is called when the student wants to take an examination
-    private void takeExam(String subject){
-    
-    }
+   
     
     public void retrieveCourses() throws SQLException, ClassNotFoundException, Exception{
         
@@ -118,6 +124,7 @@ public class Student extends Person{
         
     }
 
+    /*
     public ArrayList<Question> getAllQuestions(String course_code) throws SQLException, ClassNotFoundException, Exception {
         
         ArrayList<Question> allQuestions = new ArrayList<>();
@@ -156,5 +163,11 @@ public class Student extends Person{
         
         return allQuestions;
     }
+    */
     
+    public int getLevel(){
+    
+        return currentLevel;
+    
+    }
 }

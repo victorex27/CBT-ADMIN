@@ -4,14 +4,22 @@
  * and open the template in the editor.
  */
 
-
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.property.StringProperty;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -23,28 +31,46 @@ public class QuestionFXMLController implements Initializable {
     /**
      * Initializes the controller class.
      */
+    @FXML
+    private Pane uploadPane;
+
+    @FXML
+    private GridPane gridPane;
+    
+    @FXML 
+    private ImageView imageView;
+    
+    @FXML
+    private Button fileChooserButton;
     
     @FXML
     TextArea questionArea;
-   
+
     @FXML
     TextField questionATextField;
-  
+
     @FXML
     TextField questionBTextField;
-   
+
     @FXML
     TextField questionCTextField;
-  
+
     @FXML
     TextField questionDTextField;
-    
+
     @FXML
     TextField questionETextField;
 
+    private boolean pictureButtonClickedState;
+    private double gridPaneLayoutY;
+
+    private Question questionObject;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        pictureButtonClickedState = false;
+        gridPaneLayoutY = gridPane.getLayoutY();
         
     }
 
@@ -53,7 +79,20 @@ public class QuestionFXMLController implements Initializable {
         questionArea.setText(question.getValue());
         question.bind(questionArea.textProperty());
     }
+ /*   
+    public void setQuestionPicture(StringProperty filePath) {
 
+        fileChooserButton.setText(filePath.getValue());
+        file
+    }
+*/
+
+    
+    public void setQuestionObject(Question question){
+    
+        questionObject = question;
+    }
+    
     public void setOptionA(StringProperty optionA) {
 
         questionATextField.setText(optionA.getValue());
@@ -104,6 +143,55 @@ public class QuestionFXMLController implements Initializable {
 
     public String getOptionE() {
         return questionETextField.getText();
+    }
+
+    @FXML
+
+    public void pictureButtonClicked() {
+
+          pictureButtonClickedState = !pictureButtonClickedState;
+
+        if (pictureButtonClickedState) {
+            
+            
+      
+
+            //image view change to collapse
+            imageView.setImage(new Image(getClass().getResource("image/collapse.png").toString(), true));
+            //push gridpane down
+            gridPane.setLayoutY(gridPaneLayoutY + 100);
+            //upload picture to be visible
+            uploadPane.setVisible(true);
+        } else {
+
+            //System.out.println(imageView);
+            imageView.setImage(new Image(getClass().getResource("image/expand.png").toString(), true));
+            gridPane.setLayoutY(gridPaneLayoutY);
+            uploadPane.setVisible(false);
+        }
+        
+    }
+    
+    @FXML
+    public void fileChooserButtonClicked(ActionEvent evt) throws Exception{
+        FileChooser fileChooser = new FileChooser();
+        File file = fileChooser.showOpenDialog((Stage) fileChooserButton.getScene().getWindow());
+
+                if (file.isDirectory() || (file == null)) {
+
+                   
+                        throw new Exception("Invalid Operation");
+                    
+                }
+                String filePath = file.getAbsolutePath();
+                
+              
+                questionObject.setFilePath(filePath);
+                
+                
+        
+    
+    
     }
 
 }

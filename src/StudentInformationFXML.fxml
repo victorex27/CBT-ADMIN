@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="125.0" prefWidth="478.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="StudentInformationFXMLController">
+    <stylesheets>
+        <URL value="@studentinformationfxml.css" />
+    </stylesheets>
+   <children>
+      <Label fx:id="level" layoutX="243.0" layoutY="41.0" text="Level" />
+      <Label fx:id="deparment" layoutX="51.0" layoutY="75.0" text="Department" />
+      <Label fx:id="courseTitle" layoutX="50.0" layoutY="58.0" text="Course Title" />
+      <Label fx:id="courseCode" layoutX="51.0" layoutY="41.0" text="Course Code " />
+      <Label fx:id="name" layoutX="50.0" layoutY="24.0" text="Name of student" />
+   </children>
+</AnchorPane>

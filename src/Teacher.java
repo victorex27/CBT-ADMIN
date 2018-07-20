@@ -9,8 +9,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -44,9 +42,8 @@ public class Teacher extends Person {
     private ArrayList<Question> allQuestions;
     // this is the minimum number of options
     private final static int NO_OF_OPTIONS = 3;
-    
-    private int id;
 
+    private int id;
 
     public Teacher() {
 
@@ -59,8 +56,6 @@ public class Teacher extends Person {
         ALLOWEDEXTENSION.add("docx");
         ALLOWEDEXTENSION.add("pdf");
         ALLOWEDEXTENSION.add("txt");
-
-        
 
     }
 
@@ -93,7 +88,7 @@ public class Teacher extends Person {
     public boolean setExam(Course course, String uri) throws Exception {
 
         allQuestions = new ArrayList();
-        
+
         File file = new File(uri);
 
         isFormatValid(uri);
@@ -101,21 +96,20 @@ public class Teacher extends Person {
         isFileValid(file);
 
         parseDataObject(uri);
-        
+
         id = course.getId();
-        
-        
+
         //addToDatabase();
         return true;
     }
 
     private PreparedStatement setQueryValues(int id, PreparedStatement pStatement) {
 
-    AtomicInteger atomicInteger = new AtomicInteger(0);
-        
+        AtomicInteger atomicInteger = new AtomicInteger(0);
+
         allQuestions.forEach((Question q) -> {
 
-            int a = 7 * atomicInteger.getAndIncrement();
+            int a = 9 * atomicInteger.getAndIncrement();
 
             try {
 
@@ -127,7 +121,20 @@ public class Teacher extends Person {
                 pStatement.setString(a + 6, q.getD());
                 pStatement.setString(a + 7, q.getE());
 
-            } catch (SQLException ex) {
+                System.out.println("Second file path "+q.getFilePath());
+                if (q.getFilePath() == null) {
+
+                    pStatement.setBinaryStream(a + 8, null);
+                    pStatement.setString(a + 9, null);
+
+                } else {
+                    File file = new File(q.getFilePath());
+                    InputStream fis = new FileInputStream(file);
+                    pStatement.setBinaryStream(a + 8, fis, (int) file.length());
+                    pStatement.setString(a + 9, q.getFileType());
+                }
+
+            } catch (SQLException | FileNotFoundException ex) {
                 Logger.getLogger(Teacher.class.getName()).log(Level.SEVERE, null, ex);
             }
 
@@ -139,18 +146,17 @@ public class Teacher extends Person {
 
     public void addToDatabase() throws SQLException {
 
-        
         try {
             int sizeOfQuestion = allQuestions.size();
-            if (sizeOfQuestion < 1 ) {
+            if (sizeOfQuestion < 1) {
                 throw new Exception("Invalid Operation");
             }
 
-            String sqlQuery = "INSERT INTO exam_question(teacher_id, question, a, b, c, d, e) VALUES (?,?,?,?,?,?,?) ";
+            String sqlQuery = "INSERT INTO exam_question(teacher_id, question, a, b, c, d, e, picture, type) VALUES (?,?,?,?,?,?,?,?,?) ";
 
             while (sizeOfQuestion > 1) {
 
-                sqlQuery += " ,(?,?,?,?,?,?,?) ";
+                sqlQuery += " ,(?,?,?,?,?,?,?,?,?) ";
 
                 sizeOfQuestion--;
             }
@@ -285,8 +291,6 @@ public class Teacher extends Person {
 
                 if (!flag) {
 
-                   
-                    
                     Question q = new Question.Builder(questionText, optionA, optionB).addC(optionC).addD(optionD).addE(optionE).build();
                     allQuestions.add(q);
 

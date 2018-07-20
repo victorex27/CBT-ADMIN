@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="222.0" prefWidth="304.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="StudentAnwserViewFXMLController">
+    <stylesheets>
+        <URL value="@studentanwserviewfxml.css" />
+    </stylesheets>
+   <children>
+      <TextField fx:id="textField" layoutX="218.0" layoutY="172.0" prefHeight="36.0" prefWidth="72.0" AnchorPane.leftAnchor="232.0" AnchorPane.rightAnchor="0.0" />
+      <Pane layoutX="38.0" layoutY="44.0" maxWidth="-Infinity" prefWidth="200.0" AnchorPane.leftAnchor="38.0" AnchorPane.rightAnchor="218.0">
+         <children>
+            <Label fx:id="questionLabel" maxWidth="-Infinity" prefWidth="250.0" text="Question" wrapText="true" />
+         </children>
+      </Pane>
+      <Label layoutX="30.0" layoutY="14.0" text="Question">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="30.0" layoutY="72.0" text="Answer">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Pane layoutX="38.0" layoutY="109.0">
+         <children>
+            <Label fx:id="answerLabel" text="answer" wrapText="true" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

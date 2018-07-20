@@ -57,12 +57,14 @@ public class LoginFXMLDocumentController implements Initializable {
                 throw new Exception("Incorrect Username and Password Combination");
             }
             
-                   
+                   System.out.println("P:"+person.getFullName());
                     THomeFXMLDocumentController.setPerson(person);
                     ScreenController.changeScreen(FXMLLoader.load(getClass().getResource("THomeFXMLDocument.fxml")));
                   
                 
         } catch (Exception ex) {
+            
+            ex.printStackTrace();
             
             warningText.setText(ex.getMessage());
             warningImage.setVisible(true);

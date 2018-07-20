@@ -1,6 +1,7 @@
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import org.apache.commons.io.FilenameUtils;
 
 
 
@@ -16,6 +17,7 @@ import javafx.beans.property.StringProperty;
  */
 public class Question {
 
+    private StringProperty file;
     private StringProperty question;
     private StringProperty a;
     private StringProperty  b;
@@ -31,6 +33,7 @@ public class Question {
         c = new SimpleStringProperty();
         d = new SimpleStringProperty();
         e = new SimpleStringProperty();
+        file = new SimpleStringProperty(); 
 
 
     }
@@ -129,6 +132,27 @@ public class Question {
         return e.get();
     }
 
+    public void setFilePath(String _file){
+    
+        file.setValue(_file);
+       
+    }
+    
+    public String getFilePath(){
+    
+        return file.get();
+    }
+    
+    public StringProperty getFilePathProperty(){
+    
+        return file;
+    }
+    
+    public String getFileType(){
+    
+        return FilenameUtils.getExtension(getFilePath());
+    
+    }
     
     public static class Builder {
 
