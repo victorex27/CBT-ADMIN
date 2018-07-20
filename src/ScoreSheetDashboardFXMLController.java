@@ -32,8 +32,13 @@ import javafx.scene.layout.AnchorPane;
  *
  * @author USER
  */
-public class StudentListFXMLController implements Initializable {
+public class ScoreSheetDashboardFXMLController implements Initializable {
 
+    /**
+     * Initializes the controller class.
+     */
+    
+    
     @FXML
     ListView nameOfStudentsListView;
     @FXML
@@ -51,10 +56,11 @@ public class StudentListFXMLController implements Initializable {
     private ObservableList<String> studentId;
     private ObservableList<AnchorPane> pane;
 
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-
+        
         students = new HashMap<>();
 
         pane = FXCollections.observableArrayList();
@@ -107,17 +113,17 @@ public class StudentListFXMLController implements Initializable {
                     }
 
                 } catch (SQLException ex) {
-                    Logger.getLogger(StudentListFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ScoreSheetDashboardFXMLController.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(StudentListFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ScoreSheetDashboardFXMLController.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (IOException ex) {
-                    Logger.getLogger(StudentListFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ScoreSheetDashboardFXMLController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
     }
 
-    public void setStudentList(int teacher_id) throws SQLException, ClassNotFoundException {
+public void setStudentList(int teacher_id) throws SQLException, ClassNotFoundException {
 
         studentId = FXCollections.observableArrayList();
 
@@ -146,5 +152,6 @@ public class StudentListFXMLController implements Initializable {
         eachStudentScript.setItems(pane);
         //courseCode.setText(course.getCourseCode());
     }
-
+    
+    
 }

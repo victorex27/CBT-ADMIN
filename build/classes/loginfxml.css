@@ -15,7 +15,7 @@ and open the template in the editor.
 
 .button{
     
-    -fx-background-color: linear-gradient(to bottom, #012398, #012333);
+  /*  -fx-background-color: linear-gradient(to bottom, #012398, #012333); */
    
     /*-fx-effect: dropshadow(three-pass-box, grey, 10, 0, 0, 15);*/
        /* box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);*/

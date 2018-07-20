@@ -37,9 +37,8 @@ import org.apache.commons.io.FilenameUtils;
  *
  * @author USER
  */
-public class FileUploadFXMLController implements Initializable {
-
-    @FXML
+public class DocumentDashboardFXMLController implements Initializable {
+@FXML
     private Button fileChooserButton;
     @FXML
     private ListView listView;
@@ -149,7 +148,7 @@ public class FileUploadFXMLController implements Initializable {
                 pStatement.setBinaryStream(a + 3, stream, (int) (file.length()));
                 pStatement.setString(a + 4, ext);
             } catch (FileNotFoundException | SQLException ex) {
-                Logger.getLogger(FileUploadFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DocumentDashboardFXMLController.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         });
@@ -158,5 +157,5 @@ public class FileUploadFXMLController implements Initializable {
 
         connection.close();
 
-    }
+    }    
 }
