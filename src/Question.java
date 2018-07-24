@@ -19,6 +19,7 @@ public class Question {
 
     private StringProperty file;
     private StringProperty question;
+    private String deadline;
     private StringProperty a;
     private StringProperty  b;
     private StringProperty  c;
@@ -152,6 +153,10 @@ public class Question {
     
         return FilenameUtils.getExtension(getFilePath());
     
+    }
+
+    public void setDeadline(String deadline) {
+        this.deadline = deadline;
     }
     
     public static class Builder {

@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
@@ -109,6 +111,7 @@ public class Teacher extends Person {
 
         allQuestions.forEach((Question q) -> {
 
+           
             int a = 9 * atomicInteger.getAndIncrement();
 
             try {
@@ -143,8 +146,51 @@ public class Teacher extends Person {
         return pStatement;
 
     }
+    
+    private PreparedStatement setQueryValues2(int id, PreparedStatement pStatement,String deadline) throws ParseException {
 
-    public void addToDatabase() throws SQLException {
+        AtomicInteger atomicInteger = new AtomicInteger(0);
+        
+
+        allQuestions.forEach((Question q) -> {
+
+           
+            int a = 5 * atomicInteger.getAndIncrement();
+
+            try {
+
+                pStatement.setInt(a + 1, id);
+                pStatement.setString(a + 2, q.getQuestion());
+                
+                
+                if (q.getFilePath() == null) {
+
+                    pStatement.setBinaryStream(a + 3, null);
+                    pStatement.setString(a + 4, null);
+
+                } else {
+                    
+                    File file = new File(q.getFilePath());
+                    InputStream fis = new FileInputStream(file);
+                    pStatement.setBinaryStream(a + 3, fis, (int) file.length());
+                    pStatement.setString(a + 4, q.getFileType());
+                    
+                
+                }
+                
+                pStatement.setString(a + 5,deadline);
+
+            } catch (SQLException | FileNotFoundException ex) {
+                Logger.getLogger(Teacher.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        });
+
+        return pStatement;
+
+    }
+
+    public void addToExamDatabase() throws SQLException {
 
         try {
             int sizeOfQuestion = allQuestions.size();
@@ -165,6 +211,38 @@ public class Teacher extends Person {
             PreparedStatement pStatement = connection.prepareStatement(sqlQuery);
 
             pStatement = setQueryValues(id, pStatement);
+            pStatement.executeUpdate();
+
+        } catch (Exception ex) {
+            Logger.getLogger(Teacher.class.getName()).log(Level.SEVERE, null, ex);
+
+        } finally {
+
+            connection.close();
+        }
+    }
+
+    public void addToAssignmentDatabase(String deadline) throws SQLException {
+
+        try {
+            int sizeOfQuestion = allQuestions.size();
+            if (sizeOfQuestion < 1) {
+                throw new Exception("Invalid Operation");
+            }
+
+            String sqlQuery = "INSERT INTO assignment_question(teacher_id, question,picture, type, deadline) VALUES (?,?,?,?,?) ";
+
+            while (sizeOfQuestion > 1) {
+
+                sqlQuery += " ,(?,?,?,?,?) ";
+
+                sizeOfQuestion--;
+            }
+
+            connection = SimpleConnection.getConnection();
+            PreparedStatement pStatement = connection.prepareStatement(sqlQuery);
+
+            pStatement = setQueryValues2(id, pStatement,deadline);
             pStatement.executeUpdate();
 
         } catch (Exception ex) {

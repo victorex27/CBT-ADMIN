@@ -16,7 +16,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
@@ -27,13 +26,11 @@ import javafx.stage.Stage;
  *
  * @author USER
  */
-public class QuestionFXMLController implements Initializable {
+public class AssignmentFXMLController implements Initializable {
 
     /**
      * Initializes the controller class.
      */
-    @FXML
-    private AnchorPane anchorPane;
     @FXML
     private Pane uploadPane;
 
@@ -47,30 +44,15 @@ public class QuestionFXMLController implements Initializable {
     private Button fileChooserButton;
     
     @FXML
-    private TextArea questionArea;
+    TextArea questionArea;
 
-    @FXML
-    private TextField questionATextField;
-
-    @FXML
-    private TextField questionBTextField;
-
-    @FXML
-    private TextField questionCTextField;
-
-    @FXML
-    private TextField questionDTextField;
-
-    @FXML
-    private TextField questionETextField;
+    private String deadline;
     
-    @FXML
-    private ImageView imageViewForExamPicture;
-
     private boolean pictureButtonClickedState;
     private double gridPaneLayoutY;
 
     private Question questionObject;
+    @FXML private ImageView imageViewForExamPicture;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -85,13 +67,6 @@ public class QuestionFXMLController implements Initializable {
         questionArea.setText(question.getValue());
         question.bind(questionArea.textProperty());
     }
- /*   
-    public void setQuestionPicture(StringProperty filePath) {
-
-        fileChooserButton.setText(filePath.getValue());
-        file
-    }
-*/
 
     
     public void setQuestionObject(Question question){
@@ -99,57 +74,11 @@ public class QuestionFXMLController implements Initializable {
         questionObject = question;
     }
     
-    public void setOptionA(StringProperty optionA) {
-
-        questionATextField.setText(optionA.getValue());
-        optionA.bind(questionATextField.textProperty());
-    }
-
-    public void setOptionB(StringProperty optionB) {
-        questionBTextField.setText(optionB.getValue());
-        optionB.bind(questionBTextField.textProperty());
-
-    }
-
-    public void setOptionC(StringProperty optionC) {
-
-        questionCTextField.setText(optionC.getValue());
-        optionC.bind(questionCTextField.textProperty());
-    }
-
-    public void setOptionD(StringProperty optionD) {
-        questionDTextField.setText(optionD.getValue());
-        optionD.bind(questionDTextField.textProperty());
-    }
-
-    public void setOptionE(StringProperty optionE) {
-        questionETextField.setText(optionE.getValue());
-        optionE.bind(questionETextField.textProperty());
-    }
 
     public String getQuestion() {
         return questionArea.getText();
     }
 
-    public String getOptionA() {
-        return questionATextField.getText();
-    }
-
-    public String getOptionB() {
-        return questionBTextField.getText();
-    }
-
-    public String getOptionC() {
-        return questionCTextField.getText();
-    }
-
-    public String getOptionD() {
-        return questionDTextField.getText();
-    }
-
-    public String getOptionE() {
-        return questionETextField.getText();
-    }
 
     @FXML
 
@@ -166,7 +95,6 @@ public class QuestionFXMLController implements Initializable {
             imageView.setImage(new Image(getClass().getResource("image/collapse.png").toString(), true));
             //push gridpane down
             gridPane.setLayoutY(gridPaneLayoutY + 200);
-            //anchorPane.setPrefHeight(381);
             //upload picture to be visible
             uploadPane.setVisible(true);
         } else {
@@ -174,8 +102,6 @@ public class QuestionFXMLController implements Initializable {
             //System.out.println(imageView);
             imageView.setImage(new Image(getClass().getResource("image/expand.png").toString(), true));
             gridPane.setLayoutY(gridPaneLayoutY);
-            //anchorPane.setPrefHeight(610);
-            
             uploadPane.setVisible(false);
         }
         
@@ -186,7 +112,7 @@ public class QuestionFXMLController implements Initializable {
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog((Stage) fileChooserButton.getScene().getWindow());
 
-                if (file.isDirectory() || (file == null)) {
+if (file.isDirectory() || (file == null)) {
 
                    
                         throw new Exception("Invalid Operation");
@@ -202,10 +128,7 @@ public class QuestionFXMLController implements Initializable {
                 
                 
                 }
-                
-                
-              
-                
+                                
                 
         
     
@@ -221,5 +144,7 @@ public class QuestionFXMLController implements Initializable {
                 
         
     }
+
+   
 
 }

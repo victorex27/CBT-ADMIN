@@ -19,9 +19,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
@@ -58,9 +62,20 @@ public class QuestionDashboardFXMLController implements Initializable {
     Button saveToDbButtuon;
     @FXML
     private Label fullName;
+    @FXML
+    private DatePicker datePicker;
+    @FXML
+    private TextField hourTextField;
+    @FXML
+    private TextField minuteTextField;
+
+    @FXML
+    private ChoiceBox choiceBox;
+    @FXML 
+    private Pane datePane;
+
     private String filePath;
-    
-  
+
     @FXML
     StackPane stackPane;
     @FXML
@@ -68,18 +83,26 @@ public class QuestionDashboardFXMLController implements Initializable {
     @FXML
     AnchorPane scrollAnchorPane;
 
-    
-   
     @FXML
     ListView listView;
 
-   
-    @FXML GridPane gridPane;
-    
+    @FXML
+    GridPane gridPane;
+
+    //assignment link without file upload.
+    @FXML
+    Hyperlink assignmentLink;
+
+    private enum Type {
+        EXAM, ASSIGNMENT;
+    }
+
+    private Type choiceType;
     private Teacher teacher = THomeFXMLDocumentController.getTeacher();
-    
+
     private Course course;
 
+    private String selectedDate,selectedHour, selectedMinute;
     /**
      * Initializes the controller class.
      */
@@ -91,6 +114,48 @@ public class QuestionDashboardFXMLController implements Initializable {
         // initialize fullName label
         fullName.setText(teacher.getFullName());
 
+        listView.setVisible(false);
+        saveToDbButtuon.setVisible(false);
+
+        choiceBox.getItems().addAll("Exam", "Assignment");
+        choiceBox.getSelectionModel().isSelected(0);
+
+        choiceBox.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.equals(1)) {
+
+                assignmentLink.setVisible(true);
+                datePane.setVisible(true);
+                choiceType = Type.ASSIGNMENT;
+            } else {
+
+                assignmentLink.setVisible(false);
+                datePane.setVisible(false);
+                choiceType = Type.EXAM;
+
+            }
+        });
+        //set to todays date
+        //datePicker.setValue();
+        datePicker.setOnAction( e->{
+        
+            selectedDate = datePicker.getValue().toString();
+            //System.out.println("Selected Date= "+selectedDate);
+        
+        });
+        
+        
+        //selectedHour
+        hourTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            
+                selectedHour = newValue;
+        });
+        selectedHour = "00";
+        selectedMinute = "00";
+        minuteTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            
+                selectedMinute = newValue;
+        });
+        
         /**
          * Clean this up*
          */
@@ -114,6 +179,13 @@ public class QuestionDashboardFXMLController implements Initializable {
 
     }
 
+    private void setQuestion(String filePath) throws Exception {
+
+        teacher.setExam(course, filePath);
+        showScrollPane();
+
+    }
+
     @FXML
     public void onCustomDragEvent(DragEvent event) {
 
@@ -130,8 +202,8 @@ public class QuestionDashboardFXMLController implements Initializable {
 
                 try {
 
-                    teacher.setExam(course, filePath);
-                    showScrollPane();
+                    setQuestion(filePath);
+
                 } catch (Exception ex) {
                     errorLabel.setText(ex.getMessage());
                 }
@@ -159,8 +231,7 @@ public class QuestionDashboardFXMLController implements Initializable {
     public void onSubmiButtonClicked(ActionEvent evt) {
 
         try {
-            teacher.setExam(course, this.filePath);
-            showScrollPane();
+            setQuestion(filePath);
         } catch (Exception ex) {
             errorLabel.setText(ex.getMessage());
         }
@@ -172,6 +243,8 @@ public class QuestionDashboardFXMLController implements Initializable {
         ArrayList<Question> questionsList = teacher.getAllQuestions();
 
         ObservableList<Pane> data = FXCollections.observableArrayList();
+        choiceBox.setVisible(false);
+        assignmentLink.setVisible(false);
         listView.setVisible(true);
         saveToDbButtuon.setVisible(true);
         //dragPane.setVisible(false);
@@ -179,18 +252,33 @@ public class QuestionDashboardFXMLController implements Initializable {
         questionsList.forEach(e -> {
 
             try {
+                AnchorPane anchorPane = null;
 
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("QuestionFXML.fxml"));
-                AnchorPane anchorPane = (AnchorPane) loader.load();
-                QuestionFXMLController controller = loader.getController();
+                if (choiceType.equals(Type.ASSIGNMENT)) {
 
-                controller.setQuestionObject(e);
-                controller.setQuestion(e.getQuestionProperty());
-                controller.setOptionA(e.getAProperty());
-                controller.setOptionB(e.getBProperty());
-                controller.setOptionC(e.getCProperty());
-                controller.setOptionD(e.getDProperty());
-                controller.setOptionE(e.getEProperty());
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("AssignmentFXML.fxml"));
+                    anchorPane = (AnchorPane) loader.load();
+                    AssignmentFXMLController controller = loader.getController();
+
+                    controller.setQuestionObject(e);
+                    controller.setQuestion(e.getQuestionProperty());
+
+                } else if (choiceType.equals(Type.EXAM)) {
+
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("QuestionFXML.fxml"));
+                    anchorPane = (AnchorPane) loader.load();
+                    QuestionFXMLController controller = loader.getController();
+
+                    controller.setQuestionObject(e);
+                    controller.setQuestion(e.getQuestionProperty());
+
+                    controller.setOptionA(e.getAProperty());
+                    controller.setOptionB(e.getBProperty());
+                    controller.setOptionC(e.getCProperty());
+                    controller.setOptionD(e.getDProperty());
+                    controller.setOptionE(e.getEProperty());
+
+                }
 
                 //stackPane.getChildren().add(anchorPane);
                 //xPane.getChildren().add(anchorPane);
@@ -209,7 +297,15 @@ public class QuestionDashboardFXMLController implements Initializable {
     public void saveToDB(ActionEvent evt) {
 
         try {
-            teacher.addToDatabase();
+            if (choiceType.equals(Type.ASSIGNMENT)) {
+
+                teacher.addToAssignmentDatabase(getDeadline());
+
+            } else if (choiceType.equals(Type.EXAM)) {
+
+                teacher.addToExamDatabase();
+            }
+
             listView.setVisible(false);
             saveToDbButtuon.setVisible(false);
             dragPane.setVisible(false);
@@ -222,6 +318,11 @@ public class QuestionDashboardFXMLController implements Initializable {
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+    
+    private String getDeadline(){
+    
+        return selectedDate+" "+selectedHour+":"+selectedMinute+":00";
     }
 
 }

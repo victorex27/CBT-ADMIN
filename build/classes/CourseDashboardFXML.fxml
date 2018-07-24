@@ -62,7 +62,7 @@
                   <Font size="19.0" />
                </font>
             </Hyperlink>
-            <Hyperlink layoutX="68.0" layoutY="130.0" onAction="#onUploadQuestionCliked" text="Upload Question">
+            <Hyperlink layoutX="68.0" layoutY="130.0" onAction="#onUploadQuestionCliked" text="Upload Question / Assignment">
                <font>
                   <Font size="19.0" />
                </font>

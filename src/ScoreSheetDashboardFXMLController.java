@@ -37,8 +37,6 @@ public class ScoreSheetDashboardFXMLController implements Initializable {
     /**
      * Initializes the controller class.
      */
-    
-    
     @FXML
     ListView nameOfStudentsListView;
     @FXML
@@ -56,11 +54,12 @@ public class ScoreSheetDashboardFXMLController implements Initializable {
     private ObservableList<String> studentId;
     private ObservableList<AnchorPane> pane;
 
-    
+    private int teacherId;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        
+
         students = new HashMap<>();
 
         pane = FXCollections.observableArrayList();
@@ -74,8 +73,7 @@ public class ScoreSheetDashboardFXMLController implements Initializable {
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 
                 try {
-                    System.out.println("changed");
-                    
+
                     pane.clear();
 
                     //Get the header information about the student.
@@ -83,33 +81,43 @@ public class ScoreSheetDashboardFXMLController implements Initializable {
                     //AnchorPane headerPane = (AnchorPane) loader.load();
                     //StudentInformationFXMLController headerController = loader.getController();
                     //headerController.setStudent(currentStudent);
-
                     //Get the students questions
                     Connection connection = SimpleConnection.getConnection();
-                    String sqlQuery = "SELECT text, question "
+                    /*   String sqlQuery = "SELECT text, question "
                             + "FROM course_registration "
                             + "INNER JOIN answer "
                             + "ON course_registration.id = answer.course_registration_id "
                             + "INNER JOIN exam_question "
                             + "ON exam_question.id = answer.exam_question_id "
                             + "WHERE course_registration_id = ? ";
-
+                     */
+                    String sqlQuery = "SELECT assignment_answer.file,assignment_answer.type,assignment_answer.question_id,assignment_answer.name, "
+                            + "assignment_question.question ,assignment_question.type,assignment_question.picture "
+                            + "FROM assignment_answer "
+                            + "INNER JOIN assignment_question "
+                            + "ON  assignment_answer.question_id = assignment_question.id "
+                            + "WHERE assignment_answer.teacher_id = ? and assignment_answer.student_id = ? and marked <> 'true' ";
                     PreparedStatement pStatement = connection.prepareStatement(sqlQuery);
 
-                    pStatement.setInt(1, students.get(newValue));
+                    pStatement.setString(2, newValue);
+                    pStatement.setInt(1, teacherId);
 
-                    //System.out.println("V: "+students.get(newValue));
+                    
                     ResultSet resultSet = pStatement.executeQuery();
 
                     while (resultSet.next()) {
-                        FXMLLoader loaderBody = new FXMLLoader(getClass().getResource("StudentAnwserViewFXML.fxml"));
+                        FXMLLoader loaderBody = new FXMLLoader(getClass().getResource("StudentAssignmentAnswerFXML.fxml"));
                         AnchorPane bodyPane = (AnchorPane) loaderBody.load();
-                        StudentAnwserViewFXMLController bodyController = loaderBody.getController();
+                        StudentAssignmentAnswerFXMLController bodyController = loaderBody.getController();
                         bodyController.setQuestion(resultSet.getString("question"));
-                        bodyController.setAnswer(resultSet.getString("text"));
+                        bodyController.setQuestionId(resultSet.getInt("question_id"));
+                        bodyController.setStudentId(newValue);
+                        bodyController.setTeacherId(teacherId);
+                        bodyController.setPane(bodyPane);
+                        bodyController.setPaneData(pane);
+
                         pane.add(bodyPane);
 
-                        
                     }
 
                 } catch (SQLException ex) {
@@ -123,8 +131,9 @@ public class ScoreSheetDashboardFXMLController implements Initializable {
         });
     }
 
-public void setStudentList(int teacher_id) throws SQLException, ClassNotFoundException {
+    public void setStudentList(int teacher_id) throws SQLException, ClassNotFoundException {
 
+        teacherId = teacher_id;
         studentId = FXCollections.observableArrayList();
 
         Connection connection = SimpleConnection.getConnection();
@@ -152,6 +161,5 @@ public void setStudentList(int teacher_id) throws SQLException, ClassNotFoundExc
         eachStudentScript.setItems(pane);
         //courseCode.setText(course.getCourseCode());
     }
-    
-    
+
 }

@@ -69,7 +69,7 @@ public class DocumentDashboardFXMLController implements Initializable {
 
     @FXML
     public void fileChooserButtonClicked(ActionEvent evt) throws Exception {
-        
+    
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter extFilter
                 = new FileChooser.ExtensionFilter("TEXT files (*.txt)", "*.txt", "*.pdf", "*.docx", "*.doc");

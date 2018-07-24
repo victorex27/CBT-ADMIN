@@ -57,7 +57,7 @@
                   <VBox fx:id="vBox" prefHeight="413.0" prefWidth="552.0" />
                   <Pane fx:id="dragPane" prefHeight="371.0" prefWidth="696.0" style="-fx-background-color: transparent;">
                      <children>
-                        <Button layoutX="189.0" layoutY="166.0" mnemonicParsing="false" onDragDropped="#onCustomDragEvent" onDragOver="#onCustomDragOver" prefHeight="168.0" prefWidth="175.0" style="-fx-border-color: #fff; -fx-background-color: transparent; -fx-border-width: 3px; -fx-border-style: solid;">
+                        <Button layoutX="404.0" layoutY="159.0" mnemonicParsing="false" onDragDropped="#onCustomDragEvent" onDragOver="#onCustomDragOver" prefHeight="168.0" prefWidth="175.0" style="-fx-border-color: #fff; -fx-background-color: transparent; -fx-border-width: 3px; -fx-border-style: solid;">
                            <graphic>
                               <ImageView fitHeight="152.0" fitWidth="248.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -71,14 +71,41 @@
                               <Font size="17.0" />
                            </font>
                         </Label>
-                        <Button fx:id="fileChooserButton" layoutX="47.0" layoutY="34.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="266.0" text="Select File" />
-                        <Button fx:id="submit" layoutX="364.0" layoutY="34.0" mnemonicParsing="false" onAction="#onSubmiButtonClicked" prefHeight="19.0" prefWidth="99.0" text="Upload" />
-                        <Label layoutX="257.0" layoutY="98.0" text="OR" textFill="WHITE">
+                        <Button fx:id="fileChooserButton" layoutX="147.0" layoutY="185.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="99.0" text="Select File" />
+                        <Button fx:id="submit" layoutX="147.0" layoutY="240.0" mnemonicParsing="false" onAction="#onSubmiButtonClicked" prefHeight="19.0" prefWidth="99.0" text="Upload" />
+                        <Label layoutX="290.0" layoutY="198.0" text="OR" textFill="WHITE">
                            <font>
                               <Font size="29.0" />
                            </font>
                         </Label>
                         <ListView fx:id="listView" prefHeight="371.0" prefWidth="620.0" visible="false" />
+                        <ChoiceBox fx:id="choiceBox" layoutX="147.0" layoutY="35.0" prefWidth="150.0">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </ChoiceBox>
+                        <Hyperlink fx:id="assignmentLink" layoutX="148.0" layoutY="85.0" text="Set up Assignment without file upload" visible="false">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Hyperlink>
+                        <Pane fx:id="datePane" layoutX="373.0" layoutY="35.0">
+                           <children>
+                              <TextField fx:id="hourTextField" layoutX="1.0" layoutY="38.0" prefHeight="25.0" prefWidth="49.0" text="00" />
+                              <Label layoutX="59.0" layoutY="42.0" text="h" textFill="WHITE">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="135.0" layoutY="42.0" text="m" textFill="WHITE">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <DatePicker fx:id="datePicker" />
+                              <TextField fx:id="minuteTextField" layoutX="79.0" layoutY="38.0" prefHeight="25.0" prefWidth="49.0" text="00" />
+                           </children>
+                        </Pane>
                      </children>
                   </Pane>
                </children>
