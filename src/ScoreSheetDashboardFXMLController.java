@@ -113,6 +113,7 @@ public class ScoreSheetDashboardFXMLController implements Initializable {
                         bodyController.setQuestionId(resultSet.getInt("question_id"));
                         bodyController.setStudentId(newValue);
                         bodyController.setTeacherId(teacherId);
+                       
                         bodyController.setPane(bodyPane);
                         bodyController.setPaneData(pane);
 

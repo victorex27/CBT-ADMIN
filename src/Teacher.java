@@ -69,7 +69,7 @@ public class Teacher extends Person {
         if (!ALLOWEDEXTENSION.contains(ext)) {
             throw new Exception("Invalid File Format");
         }
-        System.out.println("File Format is valid");
+        
         return true;
     }
 
@@ -78,7 +78,7 @@ public class Teacher extends Person {
         if (!file.exists() || file.isDirectory()) {
             throw new FileNotFoundException();
         }
-        System.out.println("File is valid");
+        
         return true;
     }
 
@@ -124,7 +124,7 @@ public class Teacher extends Person {
                 pStatement.setString(a + 6, q.getD());
                 pStatement.setString(a + 7, q.getE());
 
-                System.out.println("Second file path "+q.getFilePath());
+              
                 if (q.getFilePath() == null) {
 
                     pStatement.setBinaryStream(a + 8, null);

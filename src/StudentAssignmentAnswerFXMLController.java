@@ -41,6 +41,7 @@ public class StudentAssignmentAnswerFXMLController implements Initializable {
 
     private ObservableList<AnchorPane> paneData;
     private AnchorPane pane;
+    private String courseTitle;
 
     /**
      * Initializes the controller class.
@@ -70,10 +71,12 @@ public class StudentAssignmentAnswerFXMLController implements Initializable {
             
             String name = resultSet.getString("name");
                 
+            
 
                 
-                File file = new File(name);
+                File file = new File(name.replaceAll(" ", "")+questionId+"."+resultSet.getString("type"));
 
+                //System.out.println("the name that will be given to the file: "+name.replaceAll(" ", ""));
                 InputStream is = resultSet.getBinaryStream("file");
                 OutputStream os = new FileOutputStream(file);
 
@@ -111,7 +114,7 @@ public class StudentAssignmentAnswerFXMLController implements Initializable {
         pStatement.setString(3, studentId);
         pStatement.setInt(4, questionId);
 
-        System.out.println(pStatement.execute());
+        pStatement.execute();
 
         pStatement.close();
         connection.close();
@@ -142,6 +145,10 @@ public class StudentAssignmentAnswerFXMLController implements Initializable {
 
     public void setPaneData(ObservableList<AnchorPane> paneData) {
         this.paneData = paneData;
+    }
+
+    public void setCourseTitle(String courseTitle) {
+        this.courseTitle = courseTitle;
     }
 
 }
