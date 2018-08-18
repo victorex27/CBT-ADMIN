@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -19,6 +20,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -66,16 +69,21 @@ public class QuestionFXMLController implements Initializable {
     
     @FXML
     private ImageView imageViewForExamPicture;
+    
+    @FXML
+    private VBox vBox;
 
     private boolean pictureButtonClickedState;
     private double gridPaneLayoutY;
 
     private Question questionObject;
+    private ListView listView;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         pictureButtonClickedState = false;
+        //anchorPane.getChildren().remove(uploadPane);
         gridPaneLayoutY = gridPane.getLayoutY();
         
     }
@@ -164,19 +172,29 @@ public class QuestionFXMLController implements Initializable {
 
             //image view change to collapse
             imageView.setImage(new Image(getClass().getResource("image/collapse.png").toString(), true));
+            //System.out.println("which of the list was selected, Ans: "+listView.getSelectionModel());
+            
+            anchorPane.setPrefHeight(581);
             //push gridpane down
             gridPane.setLayoutY(gridPaneLayoutY + 200);
+            
             //anchorPane.setPrefHeight(381);
             //upload picture to be visible
             uploadPane.setVisible(true);
+           
+            //anchorPane.getChildren().add(0,uploadPane);
+            listView.setPrefHeight(Region.USE_COMPUTED_SIZE);
         } else {
 
             //System.out.println(imageView);
             imageView.setImage(new Image(getClass().getResource("image/expand.png").toString(), true));
+            anchorPane.setPrefHeight(381);
             gridPane.setLayoutY(gridPaneLayoutY);
             //anchorPane.setPrefHeight(610);
-            
+            //anchorPane.getChildren().remove(uploadPane);
             uploadPane.setVisible(false);
+            listView.setPrefHeight(Region.USE_COMPUTED_SIZE);
+            
         }
         
     }
@@ -220,6 +238,10 @@ public class QuestionFXMLController implements Initializable {
                 questionObject.setFilePath(null);
                 
         
+    }
+
+    public void setListView(ListView listView) {
+        this.listView = listView;
     }
 
 }

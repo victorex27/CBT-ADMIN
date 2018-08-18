@@ -77,6 +77,8 @@ public class QuestionDashboardFXMLController implements Initializable {
     private String filePath;
 
     @FXML
+    ListView listView;
+    @FXML
     StackPane stackPane;
     @FXML
     ScrollPane scrollPane;
@@ -84,7 +86,7 @@ public class QuestionDashboardFXMLController implements Initializable {
     AnchorPane scrollAnchorPane;
 
     @FXML
-    ListView listView;
+    VBox listViewVBox;
 
     @FXML
     GridPane gridPane;
@@ -114,7 +116,7 @@ public class QuestionDashboardFXMLController implements Initializable {
         // initialize fullName label
         fullName.setText(teacher.getFullName());
 
-        listView.setVisible(false);
+        listViewVBox.setVisible(false);
         saveToDbButtuon.setVisible(false);
 
         choiceBox.getItems().addAll("Exam", "Assignment");
@@ -245,7 +247,7 @@ public class QuestionDashboardFXMLController implements Initializable {
         ObservableList<Pane> data = FXCollections.observableArrayList();
         choiceBox.setVisible(false);
         assignmentLink.setVisible(false);
-        listView.setVisible(true);
+        listViewVBox.setVisible(true);
         saveToDbButtuon.setVisible(true);
         //dragPane.setVisible(false);
 
@@ -268,6 +270,7 @@ public class QuestionDashboardFXMLController implements Initializable {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("QuestionFXML.fxml"));
                     anchorPane = (AnchorPane) loader.load();
                     QuestionFXMLController controller = loader.getController();
+                    controller.setListView(listView);
 
                     controller.setQuestionObject(e);
                     controller.setQuestion(e.getQuestionProperty());
@@ -283,13 +286,16 @@ public class QuestionDashboardFXMLController implements Initializable {
                 //stackPane.getChildren().add(anchorPane);
                 //xPane.getChildren().add(anchorPane);
                 data.add(anchorPane);
+                //listViewVBox.getChildren().add(anchorPane);
 
             } catch (IOException ex) {
                 Logger.getLogger(THomeFXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
             }
+            
+            listView.setItems(data);
         });
 
-        listView.setItems(data);
+        
 
     }
 
@@ -306,7 +312,7 @@ public class QuestionDashboardFXMLController implements Initializable {
                 teacher.addToExamDatabase();
             }
 
-            listView.setVisible(false);
+            listViewVBox.setVisible(false);
             saveToDbButtuon.setVisible(false);
             dragPane.setVisible(false);
             vBox.setVisible(true);
