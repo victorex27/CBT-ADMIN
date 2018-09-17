@@ -45,12 +45,17 @@ public class CourseDashboardFXMLController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        BackButtonController.setPrevious("THomeFXMLDocument.fxml");
+        System.out.println("course id "+CardViewFXMLController.getCourseId());
+        System.out.println(Course.getCourse(CardViewFXMLController.getCourseId()));
+        this.course = Course.getCourse(CardViewFXMLController.getCourseId());
+        courseTitle.setText(course.getCourseTitle());
     }
 
     public void setCourse(Course course) {
 
-        this.course = course;
-        courseTitle.setText(course.getCourseTitle());
+        //this.course = course;
+        //courseTitle.setText(course.getCourseTitle());
     }
 
     @FXML
@@ -61,7 +66,7 @@ public class CourseDashboardFXMLController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("ScoreSheetDashboardFXML.fxml"));
             AnchorPane pane = (AnchorPane) loader.load();
             ScoreSheetDashboardFXMLController controller = loader.getController();
-            controller.setStudentList(course.getId());
+            controller.setStudentList(CardViewFXMLController.getCourseId());
 
             ScreenController.changeScreen(pane);
 
@@ -101,7 +106,8 @@ public class CourseDashboardFXMLController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("DocumentDashboardFXML.fxml"));
             AnchorPane pane = (AnchorPane) loader.load();
             DocumentDashboardFXMLController controller = loader.getController();
-            controller.setCourseid(course.getId());
+            
+            controller.setCourseid(CardViewFXMLController.getCourseId());
             
 
             ScreenController.changeScreen(pane);

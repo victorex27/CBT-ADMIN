@@ -59,6 +59,8 @@ public class DocumentDashboardFXMLController implements Initializable {
         
         
         DocumentListFXMLController.setData(data);
+        
+        BackButtonController.setPrevious("CourseDashboardFXML.fxml");
     }
 
     public void setCourseid(int _id) {

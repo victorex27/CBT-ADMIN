@@ -59,5 +59,10 @@
             <ListView fx:id="nameOfStudentsListView" layoutX="7.0" layoutY="40.0" prefHeight="290.0" prefWidth="136.0" />
          </children>
       </Pane>
+      <Pane layoutX="813.0" layoutY="189.0" prefHeight="57.0" prefWidth="87.0">
+         <children>
+            <fx:include source="BackButton.fxml" />
+         </children>
+      </Pane>
     </children>
 </AnchorPane>

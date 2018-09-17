@@ -50,7 +50,7 @@
             </ImageView>
          </children>
       </GridPane>
-      <Pane fx:id="rightPane" layoutX="272.0" layoutY="247.0" prefHeight="371.0" prefWidth="751.0">
+      <Pane fx:id="rightPane" layoutX="272.0" layoutY="278.0" prefHeight="340.0" prefWidth="751.0">
          <children>
             <Label fx:id="courseTitle" layoutX="68.0" layoutY="28.0" opacity="0.66" prefHeight="64.0" text="Course Title" textFill="WHITE">
                <font>
@@ -73,6 +73,13 @@
                </font>
             </Hyperlink>
          </children>
+      </Pane>
+      <Pane layoutX="876.0" layoutY="227.0" prefHeight="57.0" prefWidth="87.0">
+          <children>
+               
+                    <fx:include source="BackButton.fxml" />
+                
+          </children>
       </Pane>
     </children>
 </AnchorPane>

@@ -9,10 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="768.0" prefWidth="1024.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="QuestionDashboardFXMLController">
-    <stylesheets>
-        <URL value="@thomefxml.css" />
-    </stylesheets>
+<AnchorPane prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="QuestionDashboardFXMLController">
     <children>
         <fx:include source="FrameFXML.fxml" />
       <Label layoutX="66.0" layoutY="180.0" opacity="0.66" prefHeight="64.0" prefWidth="146.0" text="Welcome" textFill="WHITE">
@@ -55,11 +52,11 @@
             <StackPane fx:id="stackPane" prefHeight="371.0" prefWidth="619.0">
                <children>
                   <VBox fx:id="vBox" prefHeight="413.0" prefWidth="552.0" />
-                  <Pane fx:id="dragPane" prefHeight="371.0" prefWidth="696.0" style="-fx-background-color: transparent;">
+                  <Pane fx:id="dragPane" prefHeight="346.0" prefWidth="619.0">
                      <children>
-                        <Button layoutX="404.0" layoutY="159.0" mnemonicParsing="false" onDragDropped="#onCustomDragEvent" onDragOver="#onCustomDragOver" prefHeight="168.0" prefWidth="175.0" style="-fx-border-color: #fff; -fx-background-color: transparent; -fx-border-width: 3px; -fx-border-style: solid;">
+                        <Button layoutX="457.0" layoutY="107.0" mnemonicParsing="false" onDragDropped="#onCustomDragEvent" onDragOver="#onCustomDragOver" prefHeight="99.0" prefWidth="113.0" style="-fx-border-color: #fff; -fx-background-color: transparent; -fx-border-width: 3px; -fx-border-style: solid;">
                            <graphic>
-                              <ImageView fitHeight="152.0" fitWidth="248.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="91.0" fitWidth="152.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@image/import.png" />
                                  </image>
@@ -71,19 +68,14 @@
                               <Font size="17.0" />
                            </font>
                         </Label>
-                        <Button fx:id="fileChooserButton" layoutX="147.0" layoutY="185.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="99.0" text="Select File" />
-                        <Button fx:id="submit" layoutX="147.0" layoutY="240.0" mnemonicParsing="false" onAction="#onSubmiButtonClicked" prefHeight="19.0" prefWidth="99.0" text="Upload" />
-                        <Label layoutX="290.0" layoutY="198.0" text="OR" textFill="WHITE">
-                           <font>
-                              <Font size="29.0" />
-                           </font>
-                        </Label>
-                        <VBox fx:id="listViewVBox" prefHeight="371.0" prefWidth="619.0">
+                        <Button fx:id="fileChooserButton" layoutX="438.0" layoutY="37.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="99.0" text="Select File" textFill="#170d0d" />
+                        <Button fx:id="submit" layoutX="552.0" layoutY="37.0" mnemonicParsing="false" onAction="#onSubmiButtonClicked" prefHeight="25.0" prefWidth="36.0" text="Upload" />
+                        <VBox fx:id="listViewVBox" prefHeight="371.0" prefWidth="619.0" style="-fx-background-color: blue;" visible="false">
                            <children>
                               <ListView fx:id="listView" prefHeight="371.0" prefWidth="619.0" />
                            </children>
                         </VBox>
-                        <ChoiceBox fx:id="choiceBox" layoutX="147.0" layoutY="35.0" prefWidth="150.0">
+                        <ChoiceBox fx:id="choiceBox" layoutX="128.0" layoutY="37.0" prefWidth="150.0">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
@@ -93,23 +85,30 @@
                               <Font size="15.0" />
                            </font>
                         </Hyperlink>
-                        <Pane fx:id="datePane" layoutX="373.0" layoutY="35.0" visible="false">
+                        <Pane layoutX="84.0" layoutY="75.0" prefHeight="39.0" prefWidth="211.0">
                            <children>
-                              <TextField fx:id="hourTextField" layoutX="1.0" layoutY="38.0" prefHeight="25.0" prefWidth="49.0" text="00" />
-                              <Label layoutX="59.0" layoutY="42.0" text="h" textFill="WHITE">
+                              <TextField fx:id="hourTextField" layoutX="52.0" layoutY="7.0" prefHeight="25.0" prefWidth="49.0" text="00" />
+                              <Label layoutX="101.0" layoutY="7.0" text="h" textFill="WHITE">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="135.0" layoutY="42.0" text="m" textFill="WHITE">
+                              <Label layoutX="175.0" layoutY="7.0" text="m" textFill="WHITE">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </Label>
-                              <DatePicker fx:id="datePicker" />
-                              <TextField fx:id="minuteTextField" layoutX="79.0" layoutY="38.0" prefHeight="25.0" prefWidth="49.0" text="00" />
+                              <TextField fx:id="minuteTextField" layoutX="118.0" layoutY="7.0" prefHeight="25.0" prefWidth="49.0" text="00" />
+                              <Label layoutY="11.0" text="Duration" />
                            </children>
                         </Pane>
+                        <Pane fx:id="datePane" layoutX="84.0" layoutY="114.0">
+                           <children>
+                              <DatePicker fx:id="datePicker" layoutX="47.0" />
+                              <Label layoutY="4.0" text="Date" />
+                           </children>
+                        </Pane>
+                        <Label layoutX="82.0" layoutY="41.0" text="Type" />
                      </children>
                   </Pane>
                </children>
@@ -121,6 +120,11 @@
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
+         </children>
+      </Pane>
+      <Pane layoutX="826.0" layoutY="207.0" prefHeight="57.0" prefWidth="87.0">
+         <children>
+            <fx:include source="BackButton.fxml" />
          </children>
       </Pane>
     </children>

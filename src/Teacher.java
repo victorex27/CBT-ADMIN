@@ -99,7 +99,7 @@ public class Teacher extends Person {
 
         parseDataObject(uri);
 
-        id = course.getId();
+        id = CardViewFXMLController.getCourseId();
 
         //addToDatabase();
         return true;
@@ -190,8 +190,9 @@ public class Teacher extends Person {
 
     }
 
-    public void addToExamDatabase() throws SQLException {
+    public void addToExamDatabase(String duration) throws SQLException {
 
+        Connection conn = null;
         try {
             int sizeOfQuestion = allQuestions.size();
             if (sizeOfQuestion < 1) {
@@ -207,13 +208,32 @@ public class Teacher extends Person {
                 sizeOfQuestion--;
             }
 
-            connection = SimpleConnection.getConnection();
-            PreparedStatement pStatement = connection.prepareStatement(sqlQuery);
+            conn = SimpleConnection.getConnection();
+            conn.setAutoCommit(false);
+            System.out.println("Auto commit value "+conn.getAutoCommit());
+            
+            PreparedStatement pStatement = conn.prepareStatement(sqlQuery);
 
             pStatement = setQueryValues(id, pStatement);
             pStatement.executeUpdate();
+            System.out.printf("updating value in teachers table. Duration:%s : id:%s ",duration,id);
+            String sqlQuery2 = "Update teacher SET duration = ? WHERE id=?";
+            
+            PreparedStatement pStatement2 = conn.prepareStatement(sqlQuery2);
 
+            pStatement2.setString(1, duration);
+            pStatement2.setInt(2, id);
+            
+            pStatement2.executeUpdate();
+
+            conn.commit();
         } catch (Exception ex) {
+            try{
+                if(conn != null)
+                    conn.rollback();
+            }catch(SQLException e){
+                System.out.println(e.getMessage());
+            }
             Logger.getLogger(Teacher.class.getName()).log(Level.SEVERE, null, ex);
 
         } finally {

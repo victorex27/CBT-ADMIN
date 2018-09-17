@@ -60,6 +60,7 @@ public class ScoreSheetDashboardFXMLController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
 
+        BackButtonController.setPrevious("CourseDashboardFXML.fxml");
         students = new HashMap<>();
 
         pane = FXCollections.observableArrayList();

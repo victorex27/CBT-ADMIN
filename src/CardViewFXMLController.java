@@ -29,6 +29,8 @@ public class CardViewFXMLController implements Initializable {
     private Label courseCode;
     @FXML
     private Label courseTitle;
+    
+    private static int courseId;
 
     /**
      * Initializes the controller class.
@@ -50,10 +52,12 @@ public class CardViewFXMLController implements Initializable {
     
         try {
             System.out.println("Mouse click detected");
+            courseId = course.getId();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("CourseDashboardFXML.fxml"));
             AnchorPane pane = (AnchorPane)loader.load();
             CourseDashboardFXMLController controller = loader.getController();
             controller.setCourse(course);
+            
             
             
             ScreenController.changeScreen(pane);
@@ -72,6 +76,11 @@ public class CardViewFXMLController implements Initializable {
         this.course = course;
         
         setContents( course.getCourseCode(),course.getCourseTitle());
+    }
+    
+    public static int getCourseId(){
+    
+        return courseId;
     }
 
 }

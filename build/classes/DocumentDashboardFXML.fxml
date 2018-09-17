@@ -57,5 +57,10 @@
             <Button layoutX="593.0" layoutY="346.0" mnemonicParsing="false" onAction="#onSubmit" text="Upload" />
          </children>
       </Pane>
+      <Pane layoutX="880.0" layoutY="180.0" prefHeight="57.0" prefWidth="87.0">
+         <children>
+            <fx:include source="BackButton.fxml" />
+         </children>
+      </Pane>
     </children>
 </AnchorPane>

@@ -50,9 +50,7 @@ public class THomeFXMLDocumentController implements Initializable {
         return teacher;
     }
 
-    public static void setTeacher(Teacher aTeacher) {
-        teacher = aTeacher;
-    }
+    
 
     /**
      * Initializes the controller class.
@@ -187,6 +185,8 @@ public class THomeFXMLDocumentController implements Initializable {
 
         teacher = _person;
     }
+    
+   
 
     public static void setCurrentCourse(Course _course) {
 

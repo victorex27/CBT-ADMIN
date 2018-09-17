@@ -110,9 +110,11 @@ public class QuestionDashboardFXMLController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+       
 
         // TODO
+        
+        BackButtonController.setPrevious("CourseDashboardFXML.fxml");
         // initialize fullName label
         fullName.setText(teacher.getFullName());
 
@@ -125,7 +127,7 @@ public class QuestionDashboardFXMLController implements Initializable {
         choiceBox.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue.equals(1)) {
 
-                assignmentLink.setVisible(true);
+                //assignmentLink.setVisible(true);
                 datePane.setVisible(true);
                 choiceType = Type.ASSIGNMENT;
             } else {
@@ -195,25 +197,36 @@ public class QuestionDashboardFXMLController implements Initializable {
 
         Dragboard db = event.getDragboard();
         boolean success = false;
+        System.out.println("Custom drag 1");
         if (db.hasFiles()) {
             success = true;
 
+            System.out.println("Custom drag 2");
             for (File file : db.getFiles()) {
+                System.out.println("Custom drag 3");
                 filePath = file.getAbsolutePath();
                 //System.out.println(filePath);
 
+                System.out.println("Custom drag 4");
                 try {
 
+                    System.out.println("Custom drag 5");
                     setQuestion(filePath);
 
+                    System.out.println("Custom drag 6");
                 } catch (Exception ex) {
+                    System.out.println("Custom drag error"+ex.getMessage());
                     errorLabel.setText(ex.getMessage());
                 }
 
+                System.out.println("Custom drag 7");
             }
+            System.out.println("Custom drag 8");
         }
+        System.out.println("Custom drag 9");
         event.setDropCompleted(success);
         event.consume();
+        System.out.println("Custom drag 10");
 
     }
 
@@ -241,7 +254,7 @@ public class QuestionDashboardFXMLController implements Initializable {
     }
 
     public void showScrollPane() {
-
+        System.out.println("Show scroll pane 1");
         ArrayList<Question> questionsList = teacher.getAllQuestions();
 
         ObservableList<Pane> data = FXCollections.observableArrayList();
@@ -251,6 +264,7 @@ public class QuestionDashboardFXMLController implements Initializable {
         saveToDbButtuon.setVisible(true);
         //dragPane.setVisible(false);
 
+        System.out.println("Show scroll pane 2");
         questionsList.forEach(e -> {
 
             try {
@@ -258,6 +272,7 @@ public class QuestionDashboardFXMLController implements Initializable {
 
                 if (choiceType.equals(Type.ASSIGNMENT)) {
 
+                    System.out.println("Show scroll pane 3");
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("AssignmentFXML.fxml"));
                     anchorPane = (AnchorPane) loader.load();
                     AssignmentFXMLController controller = loader.getController();
@@ -267,6 +282,7 @@ public class QuestionDashboardFXMLController implements Initializable {
 
                 } else if (choiceType.equals(Type.EXAM)) {
 
+                    System.out.println("Show scroll pane 4");
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("QuestionFXML.fxml"));
                     anchorPane = (AnchorPane) loader.load();
                     QuestionFXMLController controller = loader.getController();
@@ -283,6 +299,7 @@ public class QuestionDashboardFXMLController implements Initializable {
 
                 }
 
+                System.out.println("Show scroll pane 5");
                 //stackPane.getChildren().add(anchorPane);
                 //xPane.getChildren().add(anchorPane);
                 data.add(anchorPane);
@@ -291,11 +308,12 @@ public class QuestionDashboardFXMLController implements Initializable {
             } catch (IOException ex) {
                 Logger.getLogger(THomeFXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+            System.out.println("Show scroll pane 6");
             listView.setItems(data);
+            System.out.println("Show scroll pane 7");
         });
 
-        
+        System.out.println("Show scroll pane 8");
 
     }
 
@@ -309,7 +327,7 @@ public class QuestionDashboardFXMLController implements Initializable {
 
             } else if (choiceType.equals(Type.EXAM)) {
 
-                teacher.addToExamDatabase();
+                teacher.addToExamDatabase(getDuration());
             }
 
             listViewVBox.setVisible(false);
@@ -324,6 +342,11 @@ public class QuestionDashboardFXMLController implements Initializable {
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+    
+    private String getDuration(){
+    
+        return selectedHour+":"+selectedMinute+":00";
     }
     
     private String getDeadline(){

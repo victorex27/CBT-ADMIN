@@ -20,8 +20,8 @@ public class SimpleConnection {
 
         Class.forName("com.mysql.jdbc.Driver");
 
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/cbt", "root", "");
-        return connection;
+        return DriverManager.getConnection("jdbc:mysql://localhost:3306/cbt", "root", "");
+         
 
     }
 
