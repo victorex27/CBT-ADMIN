@@ -59,6 +59,7 @@ public class LoginFXMLDocumentController implements Initializable {
             
                    System.out.println("P:"+person.getFullName());
                     THomeFXMLDocumentController.setPerson(person);
+                    FrameFXMLController.setVariables(person.getFullName());
                     ScreenController.changeScreen(FXMLLoader.load(getClass().getResource("THomeFXMLDocument.fxml")));
                   
                 

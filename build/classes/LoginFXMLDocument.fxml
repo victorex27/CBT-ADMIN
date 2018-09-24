@@ -9,9 +9,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="768.0" prefWidth="1024.0" stylesheets="@loginfxml.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="LoginFXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="768.0" prefWidth="1024.0" styleClass="background" stylesheets="@css/Login.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="LoginFXMLDocumentController">
     <children>
-        <fx:include source="FrameFXML.fxml" />
+        
       <Pane layoutX="275.0" layoutY="283.0" prefHeight="262.0" prefWidth="475.0">
          <children>
             <TextField fx:id="username" layoutX="65.0" layoutY="50.0" prefHeight="49.0" prefWidth="375.0" promptText="Username" styleClass="textField">
@@ -22,7 +22,7 @@
                <font>
                   <Font size="17.0" />
                </font></PasswordField>
-            <Button fx:id="button" layoutX="348.0" layoutY="187.0" mnemonicParsing="false" onAction="#handleLoginAction" prefHeight="43.0" prefWidth="87.0" text="Login" textFill="#ebe7e7">
+            <Button fx:id="button" layoutX="308.0" layoutY="187.0" mnemonicParsing="false" onAction="#handleLoginAction" prefHeight="58.0" prefWidth="127.0" text="Login" textFill="#ebe7e7">
                <font>
                   <Font size="18.0" />
                </font>

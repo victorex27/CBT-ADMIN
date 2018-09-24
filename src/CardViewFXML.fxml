@@ -9,18 +9,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#onMouseClicked" prefHeight="100.0" prefWidth="100.0" styleClass="anchorPane" stylesheets="@cardviewfxml.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CardViewFXMLController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="100.0" prefWidth="282.0" styleClass="anchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CardViewFXMLController">
    <children>
-      <Pane layoutX="110.0" layoutY="65.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <Label fx:id="courseCode" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="14.0" text="Label" textAlignment="CENTER" textFill="WHITE">
-               <font>
-                  <Font size="21.0" />
-               </font>
-            </Label>
-            <Label fx:id="courseTitle" alignment="CENTER" contentDisplay="CENTER" layoutX="5.0" layoutY="49.0" maxHeight="-Infinity" maxWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" opacity="0.85" prefHeight="40.0" prefWidth="88.0" text="Label" textAlignment="CENTER" textFill="WHITE" wrapText="true" />
-         </children>
-      </Pane>
+      <Button fx:id="button" layoutX="-2.0" mnemonicParsing="false" onAction="#onClick" prefHeight="100.0" prefWidth="282.0" stylesheets="@css/Login.css" />
    </children>
    <effect>
       <DropShadow />

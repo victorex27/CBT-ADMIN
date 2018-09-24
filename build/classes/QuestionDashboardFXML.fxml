@@ -9,123 +9,96 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="QuestionDashboardFXMLController">
+<AnchorPane prefHeight="768.0" prefWidth="1024.0" styleClass="background" stylesheets="@css/Login.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="QuestionDashboardFXMLController">
     <children>
         <fx:include source="FrameFXML.fxml" />
-      <Label layoutX="66.0" layoutY="180.0" opacity="0.66" prefHeight="64.0" prefWidth="146.0" text="Welcome" textFill="WHITE">
-         <font>
-            <Font size="31.0" />
-         </font>
-      </Label>
-      <Label fx:id="fullName" layoutX="220.0" layoutY="189.0" opacity="0.66" textFill="#f8f8f8">
-         <font>
-            <Font name="System Italic" size="31.0" />
-         </font>
-      </Label>
-      <GridPane layoutX="12.0" layoutY="247.0" prefHeight="291.0" prefWidth="161.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="161.0" minWidth="10.0" prefWidth="82.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints maxHeight="119.0" minHeight="10.0" prefHeight="84.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="183.0" minHeight="10.0" prefHeight="124.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="83.0" minHeight="10.0" prefHeight="83.0" vgrow="SOMETIMES" />
-        </rowConstraints>
+      <Pane fx:id="rightPane" layoutX="118.0" layoutY="247.0" prefHeight="466.0" prefWidth="905.0">
          <children>
-            <Button mnemonicParsing="false" prefHeight="77.0" prefWidth="161.0" text="Course" textFill="#fcfcfc">
-               <font>
-                  <Font size="23.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <ImageView fitHeight="49.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@image/list.png" />
-               </image>
-            </ImageView>
-         </children>
-      </GridPane>
-      <Pane fx:id="rightPane" layoutX="272.0" layoutY="247.0" prefHeight="371.0" prefWidth="751.0">
-         <children>
-            <StackPane fx:id="stackPane" prefHeight="371.0" prefWidth="619.0">
+            <StackPane fx:id="stackPane" prefHeight="466.0" prefWidth="816.0">
                <children>
                   <VBox fx:id="vBox" prefHeight="413.0" prefWidth="552.0" />
-                  <Pane fx:id="dragPane" prefHeight="346.0" prefWidth="619.0">
+                  <Pane fx:id="dragPane" prefHeight="466.0" prefWidth="664.0">
                      <children>
-                        <Button layoutX="457.0" layoutY="107.0" mnemonicParsing="false" onDragDropped="#onCustomDragEvent" onDragOver="#onCustomDragOver" prefHeight="99.0" prefWidth="113.0" style="-fx-border-color: #fff; -fx-background-color: transparent; -fx-border-width: 3px; -fx-border-style: solid;">
-                           <graphic>
-                              <ImageView fitHeight="91.0" fitWidth="152.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@image/import.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                        <Label fx:id="errorLabel" layoutX="177.0" layoutY="321.0" textFill="#eeeded">
+                        <Pane layoutX="101.0" layoutY="226.0" prefHeight="206.0" prefWidth="303.0">
+                           <children>
+                              <Button layoutX="78.0" layoutY="82.0" mnemonicParsing="false" onDragDropped="#onCustomDragEvent" onDragOver="#onCustomDragOver" prefHeight="99.0" prefWidth="113.0" style="-fx-border-color: #fff; -fx-background-color: transparent; -fx-border-width: 3px; -fx-border-style: solid;">
+                                 <graphic>
+                                    <ImageView fitHeight="91.0" fitWidth="152.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@image/import.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="submit" layoutX="161.0" layoutY="3.0" mnemonicParsing="false" onAction="#onSubmiButtonClicked" prefHeight="58.0" prefWidth="143.0" text="Upload" />
+                              <Button fx:id="fileChooserButton" layoutX="3.0" layoutY="3.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="143.0" text="File" textFill="#170d0d" />
+                           </children>
+                        </Pane>
+                        <Label fx:id="errorLabel" layoutX="400.0" layoutY="323.0" textFill="#eeeded">
                            <font>
                               <Font size="17.0" />
                            </font>
                         </Label>
-                        <Button fx:id="fileChooserButton" layoutX="438.0" layoutY="37.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="99.0" text="Select File" textFill="#170d0d" />
-                        <Button fx:id="submit" layoutX="552.0" layoutY="37.0" mnemonicParsing="false" onAction="#onSubmiButtonClicked" prefHeight="25.0" prefWidth="36.0" text="Upload" />
-                        <VBox fx:id="listViewVBox" prefHeight="371.0" prefWidth="619.0" style="-fx-background-color: blue;" visible="false">
+                        <VBox fx:id="listViewVBox" prefHeight="466.0" prefWidth="794.0" visible="false">
                            <children>
-                              <ListView fx:id="listView" prefHeight="371.0" prefWidth="619.0" />
+                              <ListView fx:id="listView" prefHeight="464.0" prefWidth="691.0" styleClass="background" />
                            </children>
                         </VBox>
-                        <ChoiceBox fx:id="choiceBox" layoutX="128.0" layoutY="37.0" prefWidth="150.0">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </ChoiceBox>
-                        <Hyperlink fx:id="assignmentLink" layoutX="148.0" layoutY="85.0" text="Set up Assignment without file upload" visible="false">
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </Hyperlink>
-                        <Pane layoutX="84.0" layoutY="75.0" prefHeight="39.0" prefWidth="211.0">
+                        <Pane fx:id="topPane" layoutX="84.0" layoutY="37.0">
                            <children>
-                              <TextField fx:id="hourTextField" layoutX="52.0" layoutY="7.0" prefHeight="25.0" prefWidth="49.0" text="00" />
-                              <Label layoutX="101.0" layoutY="7.0" text="h" textFill="WHITE">
+                              <ChoiceBox fx:id="choiceBox" layoutX="44.0" prefWidth="150.0">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </ChoiceBox>
+                              <Pane layoutY="38.0" prefHeight="39.0" prefWidth="211.0">
+                                 <children>
+                                    <TextField fx:id="hourTextField" layoutX="52.0" layoutY="7.0" prefHeight="25.0" prefWidth="49.0" text="00" />
+                                    <Label layoutX="101.0" layoutY="7.0" text="h" textFill="WHITE">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="175.0" layoutY="7.0" text="m" textFill="WHITE">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="minuteTextField" layoutX="118.0" layoutY="7.0" prefHeight="25.0" prefWidth="49.0" text="01" />
+                                    <Label fx:id="timeLabel" layoutY="11.0" text="Duration" textFill="#cdc9c9" />
+                                 </children>
+                              </Pane>
+                              <Pane fx:id="datePane" layoutY="97.0">
+                                 <children>
+                                    <DatePicker fx:id="datePicker" layoutX="38.0" prefHeight="30.0" prefWidth="211.0" />
+                                    <Label layoutY="4.0" text="Date" textFill="#cdc9c9" />
+                                 </children>
+                              </Pane>
+                              <Hyperlink fx:id="assignmentLink" layoutX="64.0" layoutY="48.0" text="Set up Assignment without file upload" visible="false">
                                  <font>
-                                    <Font size="16.0" />
+                                    <Font size="15.0" />
                                  </font>
-                              </Label>
-                              <Label layoutX="175.0" layoutY="7.0" text="m" textFill="WHITE">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="minuteTextField" layoutX="118.0" layoutY="7.0" prefHeight="25.0" prefWidth="49.0" text="00" />
-                              <Label layoutY="11.0" text="Duration" />
+                              </Hyperlink>
                            </children>
                         </Pane>
-                        <Pane fx:id="datePane" layoutX="84.0" layoutY="114.0">
-                           <children>
-                              <DatePicker fx:id="datePicker" layoutX="47.0" />
-                              <Label layoutY="4.0" text="Date" />
-                           </children>
-                        </Pane>
-                        <Label layoutX="82.0" layoutY="41.0" text="Type" />
                      </children>
                   </Pane>
                </children>
             </StackPane>
-            <Button fx:id="saveToDbButtuon" layoutX="627.0" layoutY="301.0" mnemonicParsing="false" onAction="#saveToDB" prefHeight="56.0" prefWidth="99.0" styleClass="whiteButton" text="Save" textFill="#f2f2f2">
-               <font>
-                  <Font size="17.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></Button>
          </children>
       </Pane>
-      <Pane layoutX="826.0" layoutY="207.0" prefHeight="57.0" prefWidth="87.0">
+      <Pane layoutX="825.0" layoutY="169.0" prefHeight="57.0" prefWidth="87.0">
          <children>
             <fx:include source="BackButton.fxml" />
          </children>
       </Pane>
+      <Button fx:id="saveToDbButtuon" layoutX="643.0" layoutY="713.0" mnemonicParsing="false" onAction="#saveToDB" prefHeight="56.0" prefWidth="99.0" styleClass="whiteButton" text="Save" textFill="#f2f2f2">
+         <font>
+            <Font size="17.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
     </children>
 </AnchorPane>

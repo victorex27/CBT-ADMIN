@@ -43,13 +43,13 @@ import javafx.stage.Stage;
  * @author USER
  */
 public class QuestionDashboardFXMLController implements Initializable {
-
+    
     @FXML
     private Button fileChooserButton;
-
+    
     @FXML
     private Button submit;
-
+    
     @FXML
     private Pane rightPane;
     @FXML
@@ -68,109 +68,113 @@ public class QuestionDashboardFXMLController implements Initializable {
     private TextField hourTextField;
     @FXML
     private TextField minuteTextField;
-
+    
+    @FXML
+    private Label timeLabel;
+    
     @FXML
     private ChoiceBox choiceBox;
-    @FXML 
+    @FXML
     private Pane datePane;
-
+    
+    @FXML
+    private Pane topPane;
+    
     private String filePath;
-
+    
     @FXML
-    ListView listView;
+    private ListView listView;
     @FXML
-    StackPane stackPane;
+    private StackPane stackPane;
     @FXML
-    ScrollPane scrollPane;
+    private ScrollPane scrollPane;
     @FXML
-    AnchorPane scrollAnchorPane;
-
+    private AnchorPane scrollAnchorPane;
+    
     @FXML
-    VBox listViewVBox;
-
+    private VBox listViewVBox;
+    
     @FXML
-    GridPane gridPane;
+    private GridPane gridPane;
 
     //assignment link without file upload.
     @FXML
-    Hyperlink assignmentLink;
-
+    private Hyperlink assignmentLink;
+    
     private enum Type {
         EXAM, ASSIGNMENT;
     }
-
+    
     private Type choiceType;
     private Teacher teacher = THomeFXMLDocumentController.getTeacher();
-
+    
     private Course course;
+    
+    private String selectedDate, selectedHour, selectedMinute;
 
-    private String selectedDate,selectedHour, selectedMinute;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       
 
         // TODO
-        
         BackButtonController.setPrevious("CourseDashboardFXML.fxml");
-        // initialize fullName label
-        fullName.setText(teacher.getFullName());
-
+        
         listViewVBox.setVisible(false);
         saveToDbButtuon.setVisible(false);
-
+        
         choiceBox.getItems().addAll("Exam", "Assignment");
-        choiceBox.getSelectionModel().isSelected(0);
-
+        
         choiceBox.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue.equals(1)) {
 
                 //assignmentLink.setVisible(true);
                 datePane.setVisible(true);
                 choiceType = Type.ASSIGNMENT;
+                timeLabel.setText("Deadline");
             } else {
-
+                
                 assignmentLink.setVisible(false);
                 datePane.setVisible(false);
                 choiceType = Type.EXAM;
-
+                
+                timeLabel.setText("Duration");
+                
             }
         });
         //set to todays date
         //datePicker.setValue();
-        datePicker.setOnAction( e->{
-        
+        datePicker.setOnAction(e -> {
+            
             selectedDate = datePicker.getValue().toString();
             //System.out.println("Selected Date= "+selectedDate);
-        
+
         });
-        
-        
+
         //selectedHour
         hourTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             
-                selectedHour = newValue;
+            selectedHour = newValue;
         });
         selectedHour = "00";
         selectedMinute = "00";
         minuteTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             
-                selectedMinute = newValue;
+            selectedMinute = newValue;
         });
-        
+
         /**
          * Clean this up*
          */
         FileChooser fileChooser = new FileChooser();
-
+        
         fileChooserButton.setOnAction((ActionEvent e) -> {
-
+            
             File file = fileChooser.showOpenDialog((Stage) fileChooserButton.getScene().getWindow());
-
+            
             if (file.isDirectory() || (file == null)) {
-
+                
                 try {
                     throw new Exception("This is a directory");
                 } catch (Exception ex) {
@@ -178,85 +182,86 @@ public class QuestionDashboardFXMLController implements Initializable {
                 }
             }
             filePath = file.getAbsolutePath();
-
+            
         });
-
+        
+        choiceBox.getSelectionModel().select(0);
     }
-
+    
     private void setQuestion(String filePath) throws Exception {
-
+        
         teacher.setExam(course, filePath);
+        topPane.setVisible(false);
         showScrollPane();
-
+        
     }
-
+    
     @FXML
     public void onCustomDragEvent(DragEvent event) {
-
+        
         Logger.getLogger(THomeFXMLDocumentController.class.getName()).log(Level.SEVERE, "File Upload Starting....", "");
-
+        
         Dragboard db = event.getDragboard();
         boolean success = false;
-        System.out.println("Custom drag 1");
+        
         if (db.hasFiles()) {
             success = true;
-
-            System.out.println("Custom drag 2");
+            
+            
             for (File file : db.getFiles()) {
-                System.out.println("Custom drag 3");
+                
                 filePath = file.getAbsolutePath();
                 //System.out.println(filePath);
 
-                System.out.println("Custom drag 4");
+               
                 try {
-
-                    System.out.println("Custom drag 5");
+                    
+                    
                     setQuestion(filePath);
-
-                    System.out.println("Custom drag 6");
+                    
+                   
                 } catch (Exception ex) {
-                    System.out.println("Custom drag error"+ex.getMessage());
+                    System.out.println("Custom drag error" + ex.getMessage());
                     errorLabel.setText(ex.getMessage());
                 }
-
-                System.out.println("Custom drag 7");
+                
+                
             }
-            System.out.println("Custom drag 8");
+            
         }
-        System.out.println("Custom drag 9");
+        
         event.setDropCompleted(success);
         event.consume();
-        System.out.println("Custom drag 10");
-
+        
     }
-
+    
     @FXML
     public void onCustomDragOver(DragEvent event) {
-
+        
         Dragboard db = event.getDragboard();
         if (db.hasFiles()) {
             event.acceptTransferModes(TransferMode.COPY);
         } else {
             event.consume();
         }
-
+        
     }
-
+    
     @FXML
     public void onSubmiButtonClicked(ActionEvent evt) {
-
+        
         try {
             setQuestion(filePath);
         } catch (Exception ex) {
             errorLabel.setText(ex.getMessage());
         }
-
+        
     }
-
+    
     public void showScrollPane() {
-        System.out.println("Show scroll pane 1");
+        
         ArrayList<Question> questionsList = teacher.getAllQuestions();
-
+        
         ObservableList<Pane> data = FXCollections.observableArrayList();
         choiceBox.setVisible(false);
         assignmentLink.setVisible(false);
@@ -264,94 +269,86 @@ public class QuestionDashboardFXMLController implements Initializable {
         saveToDbButtuon.setVisible(true);
         //dragPane.setVisible(false);
 
-        System.out.println("Show scroll pane 2");
         questionsList.forEach(e -> {
-
+            
             try {
                 AnchorPane anchorPane = null;
-
+                
                 if (choiceType.equals(Type.ASSIGNMENT)) {
-
-                    System.out.println("Show scroll pane 3");
+                    
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("AssignmentFXML.fxml"));
                     anchorPane = (AnchorPane) loader.load();
                     AssignmentFXMLController controller = loader.getController();
-
+                    
                     controller.setQuestionObject(e);
                     controller.setQuestion(e.getQuestionProperty());
-
+                    
                 } else if (choiceType.equals(Type.EXAM)) {
-
-                    System.out.println("Show scroll pane 4");
+                    
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("QuestionFXML.fxml"));
                     anchorPane = (AnchorPane) loader.load();
                     QuestionFXMLController controller = loader.getController();
                     controller.setListView(listView);
-
+                    
                     controller.setQuestionObject(e);
                     controller.setQuestion(e.getQuestionProperty());
-
+                    
                     controller.setOptionA(e.getAProperty());
                     controller.setOptionB(e.getBProperty());
                     controller.setOptionC(e.getCProperty());
                     controller.setOptionD(e.getDProperty());
                     controller.setOptionE(e.getEProperty());
-
+                    
                 }
-
-                System.out.println("Show scroll pane 5");
-                //stackPane.getChildren().add(anchorPane);
-                //xPane.getChildren().add(anchorPane);
+                
                 data.add(anchorPane);
-                //listViewVBox.getChildren().add(anchorPane);
-
+                
             } catch (IOException ex) {
                 Logger.getLogger(THomeFXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            System.out.println("Show scroll pane 6");
+            
             listView.setItems(data);
-            System.out.println("Show scroll pane 7");
+            
         });
-
-        System.out.println("Show scroll pane 8");
-
+        
     }
-
+    
     @FXML
     public void saveToDB(ActionEvent evt) {
-
+        
         try {
             if (choiceType.equals(Type.ASSIGNMENT)) {
-
+                
                 teacher.addToAssignmentDatabase(getDeadline());
-
+                
             } else if (choiceType.equals(Type.EXAM)) {
-
+                
                 teacher.addToExamDatabase(getDuration());
             }
-
+            
             listViewVBox.setVisible(false);
             saveToDbButtuon.setVisible(false);
             dragPane.setVisible(false);
             vBox.setVisible(true);
+            
         } catch (SQLException ex) {
             Logger.getLogger(THomeFXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
     }
-
+    
     public void setCourse(Course course) {
         this.course = course;
     }
     
-    private String getDuration(){
-    
-        return selectedHour+":"+selectedMinute+":00";
+    private String getDuration() {
+        
+        return selectedHour + ":" + selectedMinute + ":00";
     }
     
-    private String getDeadline(){
-    
-        return selectedDate+" "+selectedHour+":"+selectedMinute+":00";
+    private String getDeadline() {
+        
+        return selectedDate + " " + selectedHour + ":" + selectedMinute + ":00";
     }
-
+    
 }

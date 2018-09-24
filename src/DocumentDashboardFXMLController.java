@@ -115,7 +115,7 @@ public class DocumentDashboardFXMLController implements Initializable {
     }
 
     @FXML
-    public void onSubmit(ActionEvent evt) throws SQLException, ClassNotFoundException, FileNotFoundException {
+    private void onSubmit(ActionEvent evt) throws SQLException, ClassNotFoundException, FileNotFoundException {
 
         Connection connection = SimpleConnection.getConnection();
 

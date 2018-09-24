@@ -37,27 +37,24 @@ import javafx.scene.layout.VBox;
  *
  * @author USER
  */
-
 /**
- * The Vbox is on a stackpane with a Pane
- * The Pane contains the upload button and the drag and drop
- * the vbox contains the list of the subjects which is clickable to take you to the Pane
- * 
- * */
+ * The Vbox is on a stackpane with a Pane The Pane contains the upload button
+ * and the drag and drop the vbox contains the list of the subjects which is
+ * clickable to take you to the Pane
+ *
+ *
+ */
 public class THomeFXMLDocumentController implements Initializable {
 
     public static Teacher getTeacher() {
         return teacher;
     }
 
-    
-
     /**
      * Initializes the controller class.
      */
     @FXML
     private Label fullName;
-    
 
     @FXML
     StackPane stackPane;
@@ -66,7 +63,6 @@ public class THomeFXMLDocumentController implements Initializable {
     @FXML
     AnchorPane scrollAnchorPane;
 
-    
     @FXML
     public Label errorLabel;
     @FXML
@@ -74,46 +70,18 @@ public class THomeFXMLDocumentController implements Initializable {
 
     @FXML
     Button saveToDbButtuon;
-    
-    @FXML GridPane gridPane;
 
-   
+    @FXML
+    GridPane gridPane;
 
     private static Teacher teacher;
     private static Course currentCourse;
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
             // TODO
-            // initialize fullName label
+           
 
-            fullName.setText(teacher.getFullName());
-
-            /**
-             * Clean this up*
-             */
-            
-            /*
-            FileChooser fileChooser = new FileChooser();
-
-            fileChooserButton.setOnAction((ActionEvent e) -> {
-
-                File file = fileChooser.showOpenDialog((Stage) fileChooserButton.getScene().getWindow());
-
-                if (file.isDirectory() || (file == null)) {
-
-                    try {
-                        throw new Exception("This is a directory");
-                    } catch (Exception ex) {
-                        errorLabel.setText(ex.getMessage());
-                    }
-                }
-                filePath = file.getAbsolutePath();
-
-            });
-            
-            */
             
             showTeacherView(teacher);
 
@@ -128,56 +96,37 @@ public class THomeFXMLDocumentController implements Initializable {
      */
     private void showTeacherView(Teacher teacher) throws ClassNotFoundException, Exception {
 
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource("StudentListFXML.fxml"));
-  //      AnchorPane anchorPane = (AnchorPane) loader.load();
-    //            StudentListFXMLController controller = loader.getController();
-      //          controller.setStudentList(2);
-                //controller.setCourseid(1);
-        //        vBox.getChildren().add(anchorPane);
-        
         AtomicInteger count = new AtomicInteger(1);
         AtomicInteger x = new AtomicInteger(0);
         AtomicInteger y = new AtomicInteger(0);
-                
-        
-        
-        teacher.getCourses().forEach(a -> {
 
-            
+        teacher.getCourses().forEach(a -> {
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("CardViewFXML.fxml"));
 
             try {
                 AnchorPane anchorPane = (AnchorPane) loader.load();
                 CardViewFXMLController controller = loader.getController();
-                
-                
 
                 controller.setCourse(a);
                 //controller.setContents(a.getCourseCode(), a.getCourseTitle());
-                
-                
-                gridPane.add(anchorPane, x.getAndIncrement() / count.get(), y.getAndIncrement() % count.get());
+
+                gridPane.add(anchorPane,x.get() % count.get(), y.get());
 
                 count.getAndIncrement();
+                
+                if(x.get() == 1){
+                    
+                    y.getAndIncrement();
+                }
+                x.incrementAndGet();
+                
 
-  /*              anchorPane.setOnMouseClicked(e -> {
-
-                    setCurrentCourse(a);
-                    dragPane.setVisible(true);
-                    vBox.setVisible(false);
-
-                });
-*/
             } catch (IOException ex) {
                 Logger.getLogger(THomeFXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            
-        
         });
-        
-        
 
     }
 
@@ -185,13 +134,14 @@ public class THomeFXMLDocumentController implements Initializable {
 
         teacher = _person;
     }
-    
-   
 
     public static void setCurrentCourse(Course _course) {
 
         currentCourse = _course;
     }
 
-    
+    @FXML private void logout(ActionEvent evt) throws IOException{
+        
+        ScreenController.changeScreen(FXMLLoader.load(getClass().getResource("LoginFXMLDocument.fxml")));
+    }
 }

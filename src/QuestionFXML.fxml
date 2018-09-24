@@ -10,33 +10,30 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" fx:id="anchorPane" maxHeight="581.0" prefHeight="381.0" prefWidth="610.0" style="-fx-background-color: transparent;" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="QuestionFXMLController">
-    <stylesheets>
-        <URL value="@questionfxml.css" />
-    </stylesheets>
+<AnchorPane id="AnchorPane" fx:id="anchorPane" maxHeight="581.0" prefHeight="440.0" prefWidth="859.0" style="-fx-background-color: transparent;" styleClass="background" stylesheets="@css/Login.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="QuestionFXMLController">
    <children>
-      <Pane layoutX="28.0" layoutY="31.0">
+      <Pane layoutX="28.0" layoutY="31.0" prefHeight="422.0" prefWidth="738.0">
          <children>
-            <Pane fx:id="uploadPane" layoutX="73.0" layoutY="65.0" maxHeight="-Infinity" prefHeight="206.0" prefWidth="492.0" visible="false">
+            <Pane fx:id="uploadPane" layoutX="73.0" layoutY="83.0" maxHeight="-Infinity" prefHeight="230.0" prefWidth="492.0" visible="false">
                <children>
-                  <Label layoutX="278.0" layoutY="8.0" maxWidth="-Infinity" prefWidth="200.0" text="Note: If no file is selected, the Question will not contain pictures" wrapText="true" />
-                  <Button fx:id="fileChooserButton" mnemonicParsing="false" onAction="#fileChooserButtonClicked" prefHeight="25.0" prefWidth="220.0" text="Select File" />
-                  <Pane layoutX="14.0" layoutY="44.0">
+                  <Label layoutX="278.0" layoutY="8.0" maxWidth="-Infinity" prefWidth="200.0" text="Note: If no file is selected, the Question will not contain pictures" textFill="#e4d6d6" wrapText="true" />
+                  <Button fx:id="fileChooserButton" mnemonicParsing="false" onAction="#fileChooserButtonClicked" prefHeight="58.0" prefWidth="141.0" text="File" />
+                  <Pane layoutX="14.0" layoutY="67.0">
                      <children>
                         <ImageView fx:id="imageViewForExamPicture" fitHeight="155.0" fitWidth="234.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@image/book.png" />
-                           </image>
                            <viewport>
                               <Rectangle2D />
                            </viewport>
+                           <image>
+                              <Image url="@img/placeholder.gif" />
+                           </image>
                         </ImageView>
                      </children>
                   </Pane>
-                  <Button layoutX="222.0" mnemonicParsing="false" onAction="#onResetClicked" prefHeight="25.0" prefWidth="48.0" text="Reset" />
+                  <Button layoutX="154.0" mnemonicParsing="false" onAction="#onResetClicked" prefHeight="58.0" prefWidth="125.0" text="Reset" />
                </children>
             </Pane>
-            <GridPane fx:id="gridPane" alignment="CENTER" layoutX="12.0" layoutY="82.0" prefHeight="238.0" prefWidth="556.0">
+            <GridPane fx:id="gridPane" alignment="CENTER" layoutX="12.0" layoutY="82.0" prefHeight="340.0" prefWidth="702.0" vgap="20.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="226.0" minWidth="10.0" prefWidth="64.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="492.0" minWidth="10.0" prefWidth="492.0" />
@@ -48,28 +45,32 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
                   <Label text="E" GridPane.rowIndex="5" />
                   <TextField fx:id="questionETextField" prefHeight="29.0" prefWidth="441.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                   <Label text="D" GridPane.rowIndex="4" />
                   <TextField fx:id="questionDTextField" prefHeight="29.0" prefWidth="441.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <Label text="C" GridPane.rowIndex="3" />
-                  <TextField fx:id="questionCTextField" prefHeight="29.0" prefWidth="441.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Label text="C" GridPane.rowIndex="4" />
+                  <TextField fx:id="questionCTextField" prefHeight="29.0" prefWidth="441.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                   <Label text="B" GridPane.rowIndex="2" />
                   <TextField fx:id="questionBTextField" prefHeight="29.0" prefWidth="441.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <Label text="A" textAlignment="CENTER" GridPane.rowIndex="1" />
                   <TextField fx:id="questionATextField" prefHeight="29.0" prefWidth="441.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Label text="Question" />
-                  <TextArea fx:id="questionArea" prefHeight="21.0" prefWidth="492.0" GridPane.columnIndex="1" />
+                  <TextArea fx:id="questionArea" prefHeight="21.0" prefWidth="492.0" GridPane.columnIndex="1" GridPane.vgrow="NEVER" />
                </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
             </GridPane>
-            <Button alignment="CENTER_RIGHT" layoutX="9.0" layoutY="9.0" mnemonicParsing="false" onAction="#pictureButtonClicked" prefHeight="40.0" prefWidth="556.0" textAlignment="RIGHT">
+            <Button alignment="CENTER_RIGHT" layoutX="9.0" layoutY="9.0" mnemonicParsing="false" onAction="#pictureButtonClicked" prefHeight="55.0" prefWidth="702.0" textAlignment="RIGHT">
                <effect>
                   <DropShadow />
                </effect>
                <graphic>
-                  <ImageView fx:id="imageView" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="imageView" fitHeight="19.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@image/expand.png" />
                      </image>
