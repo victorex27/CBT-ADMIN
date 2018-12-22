@@ -47,8 +47,16 @@ public class Teacher extends Person {
 
     private int id;
 
-    public Teacher() {
+    public Teacher(String id, String firstName, String lastName, String middleName, String permission) {
 
+        
+        this.setId(id);
+        this.setFirstName(firstName);
+        this.setLastName(lastName);
+        this.setMiddleName(middleName);
+
+        this.setPermission(permission);
+        
         /**
          * These are the allowed extension for version 1 which is csv
          *

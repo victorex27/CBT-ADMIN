@@ -46,9 +46,7 @@ import javafx.scene.layout.VBox;
  */
 public class THomeFXMLDocumentController implements Initializable {
 
-    public static Teacher getTeacher() {
-        return teacher;
-    }
+   
 
     /**
      * Initializes the controller class.
@@ -74,17 +72,24 @@ public class THomeFXMLDocumentController implements Initializable {
     @FXML
     GridPane gridPane;
 
-    private static Teacher teacher;
+    public static Person person;
     private static Course currentCourse;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
             // TODO
-           
-
             
-            showTeacherView(teacher);
+            System.out.println("permission of the current user"+person.getPermission());
 
+           if(person.getPermission() == PermissionLevel.LECTURER){ 
+            showTeacherView(Person.getTeacher());
+           }else if(person.getPermission() == PermissionLevel.STUDENT){
+               
+               //student.setDepartment();
+                //student.retrieveCourses();
+
+                showStudentView(Person.getStudent());
+           }
         } catch (Exception ex) {
             Logger.getLogger(THomeFXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -129,10 +134,58 @@ public class THomeFXMLDocumentController implements Initializable {
         });
 
     }
+    
+    
+    private void showStudentView(Student student) throws ClassNotFoundException, Exception {
 
-    public static void setPerson(Teacher _person) {
+        if (student.getCourses().size() < 1) {
+            throw new Exception("No Registered Course for student ");
+        }
 
-        teacher = _person;
+        AtomicInteger count = new AtomicInteger(1);
+        AtomicInteger x = new AtomicInteger(0);
+        AtomicInteger y = new AtomicInteger(0);
+
+        //gridPane.getChildren().clear();
+        student.getCourses().forEach(a -> {
+
+            try {
+
+                //System.out.println("Student course"+a.getCourseCode());
+                
+                AnchorPane anchor;
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("CourseCardViewFXML.fxml"));
+                anchor = (AnchorPane) loader.load();
+                CourseCardViewFXMLController con = loader.getController();
+                //CourseCardViewFXMLController.setCourse(a);
+                con.setCourse(a);
+                
+                
+                
+                gridPane.add(anchor,x.get() % count.get(), y.get());
+       
+                //System.out.println(x.get()+" : "+y.get());
+                //gridPane.add(anchor, x.getAndIncrement() / count.get(), y.getAndIncrement() % count.get());
+
+                count.getAndIncrement();
+                
+                if(x.get() == 1){
+                    
+                    y.getAndIncrement();
+                }
+                x.incrementAndGet();
+                
+            } catch (IOException ex) {
+                Logger.getLogger(THomeFXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        });
+
+    }
+
+    public static void setPerson(Person _person) {
+
+        person = _person;
     }
 
     public static void setCurrentCourse(Course _course) {

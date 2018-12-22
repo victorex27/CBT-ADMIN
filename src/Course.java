@@ -21,6 +21,7 @@ import java.util.logging.Logger;
 public class Course {
     
     private int id;
+    private int regId;
     private String courseCode;
     private String courseTitle;
 
@@ -28,6 +29,14 @@ public class Course {
         this.id = id;
         this.courseCode = courseCode;
         this.courseTitle = courseTitle;
+    }
+
+    public int getRegId() {
+        return regId;
+    }
+
+    public void setRegId(int regId) {
+        this.regId = regId;
     }
 
     public int getId() {

@@ -106,7 +106,7 @@ public class QuestionDashboardFXMLController implements Initializable {
     }
     
     private Type choiceType;
-    private Teacher teacher = THomeFXMLDocumentController.getTeacher();
+    private Teacher teacher = (Teacher)THomeFXMLDocumentController.person;
     
     private Course course;
     

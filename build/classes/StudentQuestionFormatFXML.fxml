@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" fx:id="anchorPane" prefHeight="519.0" prefWidth="1028.0" styleClass="background" stylesheets="@css/Login.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="StudentQuestionFormatFXMLController">
+   <children>
+      <Button fx:id="nextButton" layoutX="457.0" layoutY="380.0" mnemonicParsing="false" onAction="#showNext">
+         <graphic>
+            <ImageView fitHeight="150.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/next.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="prevButton" layoutX="69.0" layoutY="379.0" mnemonicParsing="false" onAction="#showPrev">
+         <graphic>
+            <ImageView fitHeight="35.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/prev.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="submitButton" layoutX="272.0" layoutY="387.0" mnemonicParsing="false" onAction="#onSubmit" style="-fx-background-color: #012333; -fx-border-color: white; -fx-border-image-width: 4px;" text="Submit" textFill="#f5f3f3" />
+      <Pane layoutX="407.0" layoutY="53.0">
+         <children>
+            <Label layoutX="83.0" layoutY="9.0" opacity="0.67" text="mm:" textFill="WHITE">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="timerSecond" layoutX="122.0" opacity="0.67" textFill="WHITE">
+               <font>
+                  <Font size="31.0" />
+               </font>
+            </Label>
+            <Label fx:id="timerMinute" layoutX="50.0" opacity="0.67" textFill="WHITE">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <Label layoutX="156.0" layoutY="9.0" opacity="0.67" text="ss" textFill="WHITE">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="timerHour" opacity="0.67" textFill="WHITE">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <Label layoutX="17.0" layoutY="9.0" opacity="0.67" text="hh :" textFill="#f8f7f7">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane fx:id="textAreaPane" layoutX="70.0" layoutY="206.0" prefHeight="139.0" prefWidth="483.0" visible="false">
+         <children>
+            <TextArea fx:id="textArea" layoutX="1.0" layoutY="-7.0" prefHeight="148.0" prefWidth="483.0" />
+         </children>
+      </Pane>
+      <VBox fx:id="vBox" layoutX="72.0" layoutY="216.0" spacing="10.0">
+         <children>
+            <Pane>
+               <children>
+                  <Label fx:id="answerELabel" layoutX="38.0" text="Label" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <RadioButton fx:id="radioButtonE" mnemonicParsing="false" GridPane.rowIndex="4" />
+               </children>
+            </Pane>
+            <Pane>
+               <children>
+                  <RadioButton fx:id="radioButtonD" mnemonicParsing="false" GridPane.rowIndex="3" />
+                  <Label fx:id="answerDLabel" layoutX="38.0" text="Label" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+               </children>
+            </Pane>
+            <Pane>
+               <children>
+                  <RadioButton fx:id="radioButtonC" mnemonicParsing="false" GridPane.rowIndex="2" />
+                  <Label fx:id="answerCLabel" layoutX="38.0" text="Label" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+               </children>
+            </Pane>
+            <Pane>
+               <children>
+                  <Label fx:id="answerBLabel" layoutX="38.0" text="Label" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <RadioButton fx:id="radioButtonB" mnemonicParsing="false" GridPane.rowIndex="1" />
+               </children>
+            </Pane>
+            <Pane>
+               <children>
+                  <RadioButton fx:id="radioButtonA" mnemonicParsing="false" />
+                  <Label fx:id="answerALabel" layoutX="38.0" text="Label" textFill="WHITE" GridPane.columnIndex="1" />
+               </children>
+            </Pane>
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </VBox>
+      <Label fx:id="serialNumberLabel" layoutX="27.0" layoutY="36.0" text="hjhkhkhj" />
+      <Pane layoutX="104.0" layoutY="17.0">
+         <children>
+            <ImageView fx:id="imageViewOfQuestion" fitHeight="118.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </Pane>
+      <Pane layoutX="59.0" layoutY="135.0" prefWidth="641.0">
+         <children>
+            <Label fx:id="questionLabel" alignment="CENTER" contentDisplay="CENTER" maxWidth="645.0" prefWidth="643.0" text="Hellooooooooollllllllllllllllllllllllllllllllllllllllllllllllllhjhkjhkjhkjhkjduidiyhiyiyiudyiuyiuydhjtkhktjhkjhtkjhrkjnmfn m,Hellooooooooollllllllllllllllllllllllllllllllllllllllllllllllllhjhkjhkjhkjhkjduidiyhiyiyiudyiuyiuydhjtkhktjhkjhtkjhrkjnmfn m," textAlignment="JUSTIFY" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

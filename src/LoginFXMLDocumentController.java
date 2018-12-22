@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 
-
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -34,49 +33,44 @@ public class LoginFXMLDocumentController implements Initializable {
     private ImageView warningImage;
     @FXML
     private Label warningText;
-    
+
     @FXML
     private void handleLoginAction(ActionEvent event) {
-        
+
         warningImage.setVisible(false);
         warningText.setVisible(false);
-        
+
         try {
             String uName = username.getText().trim();
             String pWord = password.getText().trim();
-            
+
             if (uName == null || "".equals(uName) || pWord == null || "".equals(pWord)) {
-                
+
                 throw new Exception("Fields Cannot be empty");
-                
+
             }
-            
-            Teacher person = new Teacher();
+
+            Person person = new Person();
             /* Remember to change*/
-            if (!person.login("b", "password")) {
+            if (!person.login("a", "password")) {
                 throw new Exception("Incorrect Username and Password Combination");
             }
+
             
-                   System.out.println("P:"+person.getFullName());
-                    THomeFXMLDocumentController.setPerson(person);
-                    FrameFXMLController.setVariables(person.getFullName());
-                    ScreenController.changeScreen(FXMLLoader.load(getClass().getResource("THomeFXMLDocument.fxml")));
-                  
-                
         } catch (Exception ex) {
-            
+
             ex.printStackTrace();
-            
+
             warningText.setText(ex.getMessage());
             warningImage.setVisible(true);
             warningText.setVisible(true);
-            
+
         }
     }
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }
-    
+
 }

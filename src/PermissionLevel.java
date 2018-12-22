@@ -10,5 +10,5 @@
  */
 public enum PermissionLevel {
     
-    LECTURER,ADMINISTRATOR;
+    LECTURER,ADMINISTRATOR,STUDENT;
 }

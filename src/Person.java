@@ -7,6 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.fxml.FXMLLoader;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -25,12 +26,23 @@ public class Person {
     private String lastName;
     private AccessLevel accessLevel;
     private PermissionLevel level;
+    private static Student student;
+    private static Teacher teacher;
 
-    protected Person(){
-    
+    protected Person() {
+
         id = new SimpleStringProperty();
     }
-    
+
+    public static Student getStudent() {
+        System.out.println("id of the student is : "+student.getId());
+        return student;
+    }
+
+    public static Teacher getTeacher() {
+        return teacher;
+    }
+
     protected void setId(String _id) {
 
         id.set(_id);
@@ -41,13 +53,13 @@ public class Person {
 
         return id.get();
     }
-    
-    public StringProperty getIdProperty(){
-    
+
+    public StringProperty getIdProperty() {
+
         return id;
     }
 
-    private void setPermission(String type) {
+    protected void setPermission(String type) {
 
         /**
          * SL: School Level. Those writing Post UTME UG: Under Graduate. LE: Can
@@ -55,10 +67,13 @@ public class Person {
          * Users AD:Can create users and courses but can not set or mark exam.
          */
         switch (type) {
-            case "LE":
+            case "0":
+                level = PermissionLevel.STUDENT;
+                break;
+            case "1":
                 level = PermissionLevel.LECTURER;
                 break;
-            case "AD":
+            case "2":
                 level = PermissionLevel.ADMINISTRATOR;
                 break;
 
@@ -72,16 +87,15 @@ public class Person {
     }
 
     //this is called while login in
-    public boolean login(String username, String password) {
+    public boolean login(String username, String password) throws Exception {
+        
+        Person person = null;
 
         try {
             Connection connection = SimpleConnection.getConnection();
 
-            String sqlQuery = "SELECT person.id, first_name, last_name, middle_name, permissions.type "
-                    + "FROM person INNER JOIN permissions_assign "
-                    + "ON permissions_assign.person_id = person.id "
-                    + "INNER JOIN permissions "
-                    + "ON permissions.id = permissions_assign.permission_id "
+            String sqlQuery = "SELECT person.id, first_name, last_name, middle_name, access_level "
+                    + "FROM person "
                     + "WHERE person.id = ? and password = sha1(?) LIMIT 1";
             PreparedStatement pStatement = connection.prepareStatement(sqlQuery);
             pStatement.setString(1, username);
@@ -91,13 +105,31 @@ public class Person {
 
             if (resultSet.next()) {
 
-                System.out.println("found");
-                setId(resultSet.getString("id"));
-                setFirstName(resultSet.getString("first_name"));
-                setLastName(resultSet.getString("last_name"));
-                setMiddleName(resultSet.getString("middle_name"));
+                if ("0".equals(resultSet.getString("access_level"))) {
+                    Student s = new Student(resultSet.getString("id"),resultSet.getString("first_name"),resultSet.getString("last_name"),resultSet.getString("middle_name"),resultSet.getString("access_level"));
 
-                setPermission(resultSet.getString("type"));
+                    
+                    Person.student = s;
+                    Person.teacher = null;
+                    person = Person.student;
+
+                } else if ("1".equals(resultSet.getString("access_level"))) {
+
+                    Teacher t = new Teacher( resultSet.getString("id"),resultSet.getString("first_name"),resultSet.getString("last_name"),resultSet.getString("middle_name"),resultSet.getString("access_level") );
+
+                   
+
+                    Person.teacher = t;
+                    Person.student = null;
+                    person = Person.teacher;
+
+                }
+
+                System.out.println("found");
+                System.out.println("P:" + person.getFullName());
+                THomeFXMLDocumentController.setPerson(person);
+                FrameFXMLController.setVariables(person.getFullName());
+                ScreenController.changeScreen(FXMLLoader.load(getClass().getResource("THomeFXMLDocument.fxml")));
 
             }
 
@@ -110,11 +142,13 @@ public class Person {
         return true;
     }
 
+    /*
     //this is called to see results either by class or by student
     public void viewRecords(String subject) {
 
     }
 
+     */
     public String getFirstName() {
         return firstName;
     }
@@ -142,7 +176,8 @@ public class Person {
     public String getFullName() {
         return lastName + " " + firstName + " " + middleName;
     }
-    
+
+    /*
     public void createStudent(String id,String department, String level){
     
         try {
@@ -196,5 +231,5 @@ public class Person {
         }
     
     }
-
+     */
 }

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="768.0" prefWidth="1054.0" styleClass="background" stylesheets="@css/Login.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CourseDefaultHomeFXMLController">
+    
+    <children>
+        <fx:include source="FrameFXML.fxml" />
+      <Label layoutX="283.0" layoutY="201.0" text="Result: " textFill="#f8f3f3">
+         <font>
+            <Font size="31.0" />
+         </font>
+      </Label>
+      <Pane fx:id="rightPane" layoutX="235.0" layoutY="247.0" prefHeight="371.0" prefWidth="788.0">
+         <children>
+            <Hyperlink layoutX="86.0" layoutY="62.0" onAction="#onAssessmentClick" text="Assessment">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Hyperlink>
+            <Hyperlink layoutX="86.0" layoutY="104.0" onAction="#onLibraryClick" text="Library">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Hyperlink>
+            <Label fx:id="courseCode" layoutX="80.0" layoutY="333.0" text="CSC 301" textFill="#f8f8f8">
+               <font>
+                  <Font name="System Italic" size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="courseTitle" layoutX="150.0" layoutY="333.0" text="Course Title" textFill="#f8f8f8">
+               <font>
+                  <Font name="System Italic" size="16.0" />
+               </font>
+            </Label>
+            <Hyperlink layoutX="86.0" layoutY="146.0" onAction="#onAssinmentClick" text="Assignment">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Hyperlink>
+         </children>
+      </Pane>
+      <Label fx:id="result" layoutX="391.0" layoutY="211.0" text="N/A" textFill="#f8f8f8">
+         <font>
+            <Font name="System Italic" size="16.0" />
+         </font>
+      </Label>
+      <Pane layoutX="907.0" layoutY="167.0" prefHeight="57.0" prefWidth="87.0">
+         <children>
+            <fx:include source="BackButton.fxml" />
+         </children>
+      </Pane>
+    </children>
+</AnchorPane>
