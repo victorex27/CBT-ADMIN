@@ -13,9 +13,9 @@
 
 <AnchorPane id="AnchorPane" prefHeight="161.0" prefWidth="1024.0" styleClass="background" stylesheets="@css/Login.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FrameFXMLController">
    <children>
-      <StackPane prefHeight="160.0" prefWidth="969.0">
+      <StackPane prefHeight="160.0" prefWidth="1024.0">
          <children>
-            <Pane fx:id="container" prefHeight="161.0" prefWidth="549.0" styleClass="top-segment">
+            <Pane fx:id="container" prefHeight="160.0" prefWidth="1014.0" styleClass="top-segment">
                <children>
                   <ImageView id="userImage" fx:id="userImage" fitHeight="137.0" fitWidth="111.0" layoutX="14.0" layoutY="13.0" pickOnBounds="true">
                      <cursor>
@@ -71,6 +71,18 @@
                         <Font name="Lato-Light" size="18.0" />
                      </font>
                   </Label>
+                  <Button fx:id="closeButton" layoutX="970.0" layoutY="8.0" mnemonicParsing="false" onAction="#shutDownApp" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@img/closeImage-grey.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
                </children>
                <cursor>
                   <Cursor fx:constant="OPEN_HAND" />
@@ -78,17 +90,5 @@
             </Pane>
          </children>
       </StackPane>
-      <Button fx:id="closeButton" layoutX="969.0" layoutY="14.0" mnemonicParsing="false" onAction="#shutDownApp" style="-fx-background-color: transparent;">
-         <graphic>
-            <ImageView fitHeight="30.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../CBT-STUDENT/image/close.png" />
-               </image>
-            </ImageView>
-         </graphic>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
    </children>
 </AnchorPane>

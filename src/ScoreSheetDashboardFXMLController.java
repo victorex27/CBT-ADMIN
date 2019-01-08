@@ -41,8 +41,7 @@ public class ScoreSheetDashboardFXMLController implements Initializable {
     ListView nameOfStudentsListView;
     @FXML
     ListView eachStudentScript;
-    @FXML
-    Button submit;
+   
     @FXML
     Label totalScore, courseCode;
 
@@ -64,11 +63,7 @@ public class ScoreSheetDashboardFXMLController implements Initializable {
         students = new HashMap<>();
 
         pane = FXCollections.observableArrayList();
-        submit.setOnAction(e -> {
-
-            //send total score to the db for that student.
-        });
-
+        
         nameOfStudentsListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {

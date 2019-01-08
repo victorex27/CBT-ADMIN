@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
-<?import javafx.scene.text.*?>
-<?import java.lang.*?>
-<?import java.net.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<Pane id="AnchorPane" prefHeight="102.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AssignmentPaneFXMLController">
+<Pane id="AnchorPane" prefHeight="75.0" prefWidth="432.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AssignmentPaneFXMLController">
    <children>
       <Pane layoutX="34.0" layoutY="29.0" prefHeight="37.0" prefWidth="407.0">
          <children>
-            <Label fx:id="label" contentDisplay="CENTER" maxWidth="-Infinity" prefWidth="407.0" text="Label" wrapText="true">
-               <font>
-                  <Font size="17.0" />
-               </font>
-            </Label>
+            <Pane prefWidth="250.0">
+               <children>
+                  <Label fx:id="label" contentDisplay="CENTER" maxWidth="241.0" prefWidth="240.0" text="text" wrapText="true">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Button fx:id="submitButton" disable="true" layoutX="325.0" layoutY="7.0" mnemonicParsing="false" onAction="#onSubmitClicked" text="Submit" />
+            <Button fx:id="fileChooserButton" layoutX="261.0" layoutY="7.0" mnemonicParsing="false" text="Upload" />
          </children>
       </Pane>
-      <Button fx:id="submitButton" disable="true" layoutX="532.0" layoutY="39.0" mnemonicParsing="false" onAction="#onSubmitClicked" text="Submit" />
-      <Button fx:id="fileChooserButton" layoutX="468.0" layoutY="39.0" mnemonicParsing="false" text="Upload" />
    </children>
 </Pane>

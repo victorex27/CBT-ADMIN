@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="73.0" prefWidth="662.0" styleClass="background" stylesheets="@css/Login.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NextFXMLController">
+   <children>
+      <Button fx:id="nextButton" layoutX="77.0" layoutY="35.0" mnemonicParsing="false" onAction="#onNextClicked" prefHeight="64.0" prefWidth="120.0" visible="false">
+         <graphic>
+            <ImageView fitHeight="42.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@image/2-navigation-grey.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Button fx:id="saveButton" layoutX="555.0" layoutY="24.0" mnemonicParsing="false" onAction="#onSaveClicked" prefHeight="38.0" prefWidth="81.0">
+         <graphic>
+            <ImageView fitHeight="28.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@image/save.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+   </children>
+</AnchorPane>

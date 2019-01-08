@@ -16,6 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 
 /**
  * FXML Controller class
@@ -25,14 +26,24 @@ import javafx.scene.layout.AnchorPane;
 public class CourseDefaultHomeFXMLController implements Initializable {
     
     
-    @FXML Label result;
+    @FXML private Label result;
     
     @FXML private Label courseTitle;
     @FXML private Label courseCode;
 
     private static Course course;
-    static String courseCodeString;
-    static String courseTitleString;
+    private static String courseCodeString;
+    private static String courseTitleString;
+    
+    private VBox smallVBox ;
+    private static THomeFXMLDocumentController parentController;
+    
+     public static void setParentController(THomeFXMLDocumentController _parentController){
+        
+        parentController = _parentController;
+        System.out.println("controller is set already");
+        
+    }
     /**
      * Initializes the controller class.
      */
@@ -43,6 +54,7 @@ public class CourseDefaultHomeFXMLController implements Initializable {
         BackButtonController.setPrevious("THomeFXMLDocument.fxml");
         courseCode.setText( course.getCourseCode());
         courseTitle.setText( course.getCourseTitle());
+        smallVBox = new VBox();
     }    
 
     public static void setCourse(Course c){
@@ -53,13 +65,21 @@ public class CourseDefaultHomeFXMLController implements Initializable {
     public void onAssessmentClick(ActionEvent evt){
     
         try {
+            AssessmentFXMLController.setParentController(parentController);
+            parentController.changeThirdLinkName("Assessment");
+            VBoxController.setTopMenu(TopMenuEnum.NO_TOP);
+            
             FXMLLoader loader = new FXMLLoader(getClass().getResource("AssessmentFXML.fxml"));
             AnchorPane anchor = (AnchorPane) loader.load();
             AssessmentFXMLController con = loader.getController();
             con.setCourse(course);
            
             
-            ScreenController.changeScreen(anchor);
+            
+            
+            smallVBox.getChildren().add(0, anchor);
+
+            VBoxController.changeBox(smallVBox);
         } catch (IOException ex) {
             Logger.getLogger(CourseDefaultHomeFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -70,14 +90,17 @@ public class CourseDefaultHomeFXMLController implements Initializable {
     public void onLibraryClick(ActionEvent evt){
         
         try {
+            ReadingListFXMLController.setParentController(parentController);
+            parentController.changeThirdLinkName("Library");
+            VBoxController.setTopMenu(TopMenuEnum.NO_TOP);
             FXMLLoader loader = new FXMLLoader(getClass().getResource("ReadingListFXML.fxml"));
             AnchorPane anchor = (AnchorPane) loader.load();
             ReadingListFXMLController con = loader.getController();
             con.setDocumentId(course.getRegId());
             //con.setCourse(course);
-           
-            
-            ScreenController.changeScreen(anchor);
+           smallVBox.getChildren().add(0, anchor);
+
+            VBoxController.changeBox(smallVBox);
         } catch (IOException ex) {
             Logger.getLogger(CourseDefaultHomeFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -88,14 +111,16 @@ public class CourseDefaultHomeFXMLController implements Initializable {
     public void onAssinmentClick(ActionEvent event){
     
         try {
-            
+            AssignmentUploadFXMLController.setParentController(parentController);
+            parentController.changeThirdLinkName("Assignment");
+            VBoxController.setTopMenu(TopMenuEnum.NO_TOP);
             FXMLLoader loader = new FXMLLoader(getClass().getResource("AssignmentUploadFXML.fxml"));
             AnchorPane anchor = (AnchorPane) loader.load();
             AssignmentUploadFXMLController con = loader.getController();
-            con.setCourse(course.getRegId());
-            
-           
-            ScreenController.changeScreen(anchor);
+            con.setCourse(course);
+            smallVBox.getChildren().add(0, anchor);
+
+            VBoxController.changeBox(smallVBox);
         } catch (IOException ex) {
             Logger.getLogger(CourseDefaultHomeFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }

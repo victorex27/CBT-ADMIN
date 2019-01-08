@@ -24,6 +24,14 @@ public class AssessmentFXMLController implements Initializable {
     @FXML
     private Pane rightPane;
     private Course course;
+    
+    private static THomeFXMLDocumentController parentController;
+    
+    public static void setParentController(THomeFXMLDocumentController _parentController){
+        
+        parentController = _parentController;
+        
+    }
 
     /**
      * Initializes the controller class.
@@ -34,6 +42,7 @@ public class AssessmentFXMLController implements Initializable {
     }
 
     public void setCourse(Course course) {
+        
         this.course = course;
         System.out.println("Course set "+course.getCourseCode());
         try {

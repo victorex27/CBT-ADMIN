@@ -15,6 +15,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 
 /**
  * FXML Controller class
@@ -30,6 +32,8 @@ public class CardViewFXMLController implements Initializable {
 
     @FXML
     private Button button;
+    private VBox smallVBox;
+    private static THomeFXMLDocumentController parentController;
 
     /**
      * Initializes the controller class.
@@ -37,6 +41,13 @@ public class CardViewFXMLController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        smallVBox = new VBox();
+    }
+    
+    public static void setParentController(THomeFXMLDocumentController _parentController){
+        
+        parentController = _parentController;
+        
     }
 
     @FXML
@@ -45,12 +56,22 @@ public class CardViewFXMLController implements Initializable {
         try {
             System.out.println("Mouse click detected");
             courseId = course.getId();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("CourseDashboardFXML.fxml"));
-            AnchorPane pane = (AnchorPane) loader.load();
-            CourseDashboardFXMLController controller = loader.getController();
-            controller.setCourse(course);
+            CourseDashboardFXMLController.setCourse(course);
+            CourseDashboardFXMLController.setParentController(parentController);
+            parentController.changeSecondLinkName(course.getCourseCode());
 
-            ScreenController.changeScreen(pane);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("CourseDashboardFXML.fxml"));
+            
+            AnchorPane pane = (AnchorPane) loader.load();
+            
+            
+            
+            Pane emptyPane = new Pane();
+            smallVBox.getChildren().add(0, emptyPane);
+            smallVBox.getChildren().add(1, pane);
+
+            VBoxController.setTopMenu(TopMenuEnum.NO_TOP);
+            VBoxController.changeBox(smallVBox);
 
         } catch (IOException ex) {
             Logger.getLogger(CardViewFXMLController.class.getName()).log(Level.SEVERE, null, ex);
@@ -62,6 +83,7 @@ public class CardViewFXMLController implements Initializable {
         this.course = course;
 
         button.setText(course.getCourseCode() + "\n" + course.getCourseTitle());
+        System.out.println(course.getCourseCode());
     }
 
     public static int getCourseId() {

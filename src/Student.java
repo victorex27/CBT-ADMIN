@@ -25,6 +25,7 @@ public class Student extends Person {
     private String department;
     private ArrayList<Course> listOfCourses;
     private Connection connection;
+    private int currentCourseRegId;
 
     public Student(String id, String firstName, String lastName, String middleName, String permission) throws ClassNotFoundException, Exception {
 
@@ -168,7 +169,7 @@ public class Student extends Person {
                     is.close();
 
                     q.setId(resultSet.getInt(7));
-                    q.setImage(new Image(file.toURI().toString()));
+                    q.setImageProperty(new Image(file.toURI().toString()));
                 }
                 allQuestions.add(q);
 
@@ -180,10 +181,12 @@ public class Student extends Person {
         return allQuestions;
     }
 
-    public ArrayList<Question> getAllAssignmentQuestions(int teacher_id) throws SQLException, ClassNotFoundException, Exception {
+    public ArrayList<Question> getAllAssignmentQuestions() throws SQLException, ClassNotFoundException, Exception {
 
         ArrayList<Question> allQuestions = new ArrayList<>();
         connection = SimpleConnection.getConnection();
+        
+        System.out.println("reg id: "+currentCourseRegId);
 
         // change this
         String sqlQuery = "SELECT assignment_question.question,assignment_question.id,assignment_question.picture,assignment_question.type "
@@ -194,8 +197,8 @@ public class Student extends Person {
 
         PreparedStatement pStatement = connection.prepareStatement(sqlQuery);
 
-        pStatement.setInt(1, teacher_id);
-        pStatement.setInt(2, teacher_id);
+        pStatement.setInt(1, currentCourseRegId);
+        pStatement.setInt(2, currentCourseRegId);
         pStatement.setString(3, getId());
 
         ResultSet resultSet = pStatement.executeQuery();
@@ -228,7 +231,7 @@ public class Student extends Person {
 
                     is.close();
 
-                    q.setImage(new Image(file.toURI().toString()));
+                    q.setImageProperty(new Image(file.toURI().toString()));
                 }
                 allQuestions.add(q);
 
@@ -239,5 +242,33 @@ public class Student extends Person {
 
         return allQuestions;
     }
+    
+    public int getCourseRegId() {
+    
+        return currentCourseRegId ;
+    }
+    
+    public void setRegId(Course course) throws SQLException, ClassNotFoundException{
+    
+        try (Connection conn = SimpleConnection.getConnection()) {
+            String sqlQuery = "SELECT teacher_id from course_registration "
+                    + "INNER JOIN teacher ON teacher.id=course_registration.teacher_id WHERE course_id=? LIMIT 1";
+            
+            PreparedStatement pStatement = conn.prepareStatement(sqlQuery);
+            
+            pStatement.setInt(1, course.getId());
+            
+            
+            ResultSet resultSet = pStatement.executeQuery();
+            
+            while(resultSet.next()){
+                currentCourseRegId = resultSet.getInt("teacher_id");
+            }
+        }
+
+    }
+
+    
+
 
 }

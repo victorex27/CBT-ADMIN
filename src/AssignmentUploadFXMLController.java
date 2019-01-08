@@ -35,6 +35,14 @@ public class AssignmentUploadFXMLController implements Initializable {
     @FXML private Label noResultLabel;
     
     private static int regId;
+    
+    private static THomeFXMLDocumentController parentController;
+    
+    public static void setParentController(THomeFXMLDocumentController _parentController){
+        
+        parentController = _parentController;
+        
+    }
 
     /**
      * Initializes the controller class.
@@ -48,10 +56,10 @@ public class AssignmentUploadFXMLController implements Initializable {
         
     }
 
-    public void setCourse(int regId ) {
+    public void setCourse(Course course ) {
         try {
-            
-            questions = student.getAllAssignmentQuestions(regId);
+            student.setRegId(course);
+            questions = student.getAllAssignmentQuestions();
             showQuestionPane();
             //System.out.println("the amount of assignments for this course is "+questions.size());
         } catch (ClassNotFoundException ex) {

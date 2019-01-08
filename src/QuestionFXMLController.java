@@ -216,7 +216,7 @@ public class QuestionFXMLController implements Initializable {
                 Image image = new Image(file.toURI().toString());
                 imageViewForExamPicture.setImage(image);
                 
-                questionObject.setFilePath(filePath);
+                //questionObject.setFilePath(filePath);
                 
                 
                 }
@@ -235,7 +235,7 @@ public class QuestionFXMLController implements Initializable {
         Image image = new Image(getClass().getResource("image/book.png").toString(), true);
                 imageViewForExamPicture.setImage(image);
                 
-                questionObject.setFilePath(null);
+               // questionObject.setFilePath(null);
                 
         
     }

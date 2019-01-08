@@ -15,6 +15,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 
 /**
  * FXML Controller class
@@ -28,32 +30,50 @@ public class CourseCardViewFXMLController implements Initializable {
      */
     @FXML
     private Button button;
+    
+    private VBox smallVBox;
 
     private Student student;
    
     private Course course;
+   
+    private static THomeFXMLDocumentController parentController;
+    
+    public static void setParentController(THomeFXMLDocumentController _parentController){
+        
+        parentController = _parentController;
+        
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        
+        smallVBox = new VBox();
         
     }
+    
+    
 
     @FXML
     public void onClick(ActionEvent evt) {
 
         try {
 
-            
+            CourseDefaultHomeFXMLController.setParentController(parentController);
             CourseDefaultHomeFXMLController.setCourse(course);
+            parentController.changeSecondLinkName(course.getCourseCode());
             FXMLLoader loader = new FXMLLoader(getClass().getResource("CourseDefaultHomeFXML.fxml"));
-            AnchorPane anchor = (AnchorPane) loader.load();
-            CourseDefaultHomeFXMLController con = loader.getController();
-
+            AnchorPane pane = (AnchorPane) loader.load();
             
-            //con.setCourseCode(course.getCourseCode());
-            //con.setCourseTitle(course.getCourseTitle());
-            ScreenController.changeScreen(anchor);
+            
+            
+            Pane emptyPane = new Pane();
+            smallVBox.getChildren().add(0, emptyPane);
+            smallVBox.getChildren().add(1, pane);
+
+            VBoxController.setTopMenu(TopMenuEnum.NO_TOP);
+            VBoxController.changeBox(smallVBox);
+
         } catch (IOException ex) {
             Logger.getLogger(CourseCardViewFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }

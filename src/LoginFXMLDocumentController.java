@@ -52,18 +52,18 @@ public class LoginFXMLDocumentController implements Initializable {
 
             Person person = new Person();
             /* Remember to change*/
-            if (!person.login("a", "password")) {
+            if (!person.login(uName, pWord)) {
                 throw new Exception("Incorrect Username and Password Combination");
             }
 
             
         } catch (Exception ex) {
 
-            ex.printStackTrace();
-
+           
             warningText.setText(ex.getMessage());
-            warningImage.setVisible(true);
             warningText.setVisible(true);
+            warningImage.setVisible(true);
+            
 
         }
     }

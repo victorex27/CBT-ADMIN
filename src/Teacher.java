@@ -1,19 +1,25 @@
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.Image;
+import javax.imageio.ImageIO;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.tika.exception.TikaException;
 import org.apache.tika.metadata.Metadata;
@@ -41,22 +47,21 @@ public class Teacher extends Person {
 
     private static Connection connection;
 
-    private ArrayList<Question> allQuestions;
+    private static ArrayList<Question> allQuestions;
     // this is the minimum number of options
     private final static int NO_OF_OPTIONS = 3;
 
-    private int id;
+    private static int regId;
 
     public Teacher(String id, String firstName, String lastName, String middleName, String permission) {
 
-        
         this.setId(id);
         this.setFirstName(firstName);
         this.setLastName(lastName);
         this.setMiddleName(middleName);
 
         this.setPermission(permission);
-        
+
         /**
          * These are the allowed extension for version 1 which is csv
          *
@@ -77,7 +82,7 @@ public class Teacher extends Person {
         if (!ALLOWEDEXTENSION.contains(ext)) {
             throw new Exception("Invalid File Format");
         }
-        
+
         return true;
     }
 
@@ -86,7 +91,7 @@ public class Teacher extends Person {
         if (!file.exists() || file.isDirectory()) {
             throw new FileNotFoundException();
         }
-        
+
         return true;
     }
 
@@ -107,10 +112,43 @@ public class Teacher extends Person {
 
         parseDataObject(uri);
 
-        id = CardViewFXMLController.getCourseId();
+        getCourseRegId(course);
 
         //addToDatabase();
         return true;
+    }
+
+    public int getCourseRegId(Course course) {
+
+        // teacher.id from teacher on database
+        try {
+            Connection connection = SimpleConnection.getConnection();
+
+            String sqlQuery = "SELECT id "
+                    + "FROM teacher "
+                    + "WHERE person_id = ? and course_id = ? LIMIT 1";
+            PreparedStatement pStatement = connection.prepareStatement(sqlQuery);
+
+            pStatement.setString(1, this.getId());
+            pStatement.setInt(2, CardViewFXMLController.getCourseId());
+
+            ResultSet resultSet = pStatement.executeQuery();
+
+            if (resultSet.next()) {
+
+                regId = resultSet.getInt("id");
+
+            }
+
+            connection.close();
+
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(Person.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+
+        return regId;
+
     }
 
     private PreparedStatement setQueryValues(int id, PreparedStatement pStatement) {
@@ -119,7 +157,6 @@ public class Teacher extends Person {
 
         allQuestions.forEach((Question q) -> {
 
-           
             int a = 9 * atomicInteger.getAndIncrement();
 
             try {
@@ -132,20 +169,27 @@ public class Teacher extends Person {
                 pStatement.setString(a + 6, q.getD());
                 pStatement.setString(a + 7, q.getE());
 
-              
-                if (q.getFilePath() == null) {
+                Image image = q.getImage();
+                if (image == null) {
 
                     pStatement.setBinaryStream(a + 8, null);
                     pStatement.setString(a + 9, null);
 
                 } else {
-                    File file = new File(q.getFilePath());
-                    InputStream fis = new FileInputStream(file);
-                    pStatement.setBinaryStream(a + 8, fis, (int) file.length());
-                    pStatement.setString(a + 9, q.getFileType());
+
+                    BufferedImage bufferedImage = SwingFXUtils.fromFXImage(image, null);
+
+                    ByteArrayOutputStream os = new ByteArrayOutputStream();
+                    ImageIO.write(bufferedImage, "png", os);
+                    InputStream fis = new ByteArrayInputStream(os.toByteArray());
+
+                    pStatement.setBinaryStream(a + 8, fis);
+                    pStatement.setString(a + 9, null);
                 }
 
             } catch (SQLException | FileNotFoundException ex) {
+                Logger.getLogger(Teacher.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
                 Logger.getLogger(Teacher.class.getName()).log(Level.SEVERE, null, ex);
             }
 
@@ -154,41 +198,44 @@ public class Teacher extends Person {
         return pStatement;
 
     }
-    
-    private PreparedStatement setQueryValues2(int id, PreparedStatement pStatement,String deadline) throws ParseException {
+
+    private PreparedStatement setQueryValues2(int id, PreparedStatement pStatement, String deadline) throws ParseException {
 
         AtomicInteger atomicInteger = new AtomicInteger(0);
-        
 
         allQuestions.forEach((Question q) -> {
 
-           
             int a = 5 * atomicInteger.getAndIncrement();
 
+            Image image = q.getImage();
             try {
 
                 pStatement.setInt(a + 1, id);
                 pStatement.setString(a + 2, q.getQuestion());
-                
-                
-                if (q.getFilePath() == null) {
+
+                if (q.getImage() == null) {
 
                     pStatement.setBinaryStream(a + 3, null);
                     pStatement.setString(a + 4, null);
 
                 } else {
-                    
-                    File file = new File(q.getFilePath());
-                    InputStream fis = new FileInputStream(file);
-                    pStatement.setBinaryStream(a + 3, fis, (int) file.length());
-                    pStatement.setString(a + 4, q.getFileType());
-                    
-                
+
+                    BufferedImage bufferedImage = SwingFXUtils.fromFXImage(image, null);
+
+                    ByteArrayOutputStream os = new ByteArrayOutputStream();
+                    ImageIO.write(bufferedImage, "png", os);
+                    InputStream fis = new ByteArrayInputStream(os.toByteArray());
+
+                    pStatement.setBinaryStream(a + 3, fis);
+                    pStatement.setString(a + 4, null);
+
                 }
-                
-                pStatement.setString(a + 5,deadline);
+
+                pStatement.setString(a + 5, deadline);
 
             } catch (SQLException | FileNotFoundException ex) {
+                Logger.getLogger(Teacher.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
                 Logger.getLogger(Teacher.class.getName()).log(Level.SEVERE, null, ex);
             }
 
@@ -218,28 +265,34 @@ public class Teacher extends Person {
 
             conn = SimpleConnection.getConnection();
             conn.setAutoCommit(false);
-            System.out.println("Auto commit value "+conn.getAutoCommit());
-            
+            System.out.println("Auto commit value " + conn.getAutoCommit());
+            //deleteFromDB(conn);
+
+            deleteFromDB(conn);
+
             PreparedStatement pStatement = conn.prepareStatement(sqlQuery);
 
-            pStatement = setQueryValues(id, pStatement);
+            pStatement = setQueryValues(regId, pStatement);
+
+            System.out.printf("updating value in teachers table. Duration:%s : id:%s ", duration, regId);
             pStatement.executeUpdate();
-            System.out.printf("updating value in teachers table. Duration:%s : id:%s ",duration,id);
+
             String sqlQuery2 = "Update teacher SET duration = ? WHERE id=?";
-            
+
             PreparedStatement pStatement2 = conn.prepareStatement(sqlQuery2);
 
             pStatement2.setString(1, duration);
-            pStatement2.setInt(2, id);
-            
+            pStatement2.setInt(2, regId);
+
             pStatement2.executeUpdate();
 
             conn.commit();
         } catch (Exception ex) {
-            try{
-                if(conn != null)
+            try {
+                if (conn != null) {
                     conn.rollback();
-            }catch(SQLException e){
+                }
+            } catch (SQLException e) {
                 System.out.println(e.getMessage());
             }
             Logger.getLogger(Teacher.class.getName()).log(Level.SEVERE, null, ex);
@@ -270,7 +323,7 @@ public class Teacher extends Person {
             connection = SimpleConnection.getConnection();
             PreparedStatement pStatement = connection.prepareStatement(sqlQuery);
 
-            pStatement = setQueryValues2(id, pStatement,deadline);
+            pStatement = setQueryValues2(regId, pStatement, deadline);
             pStatement.executeUpdate();
 
         } catch (Exception ex) {
@@ -319,7 +372,7 @@ public class Teacher extends Person {
 
     }
 
-    public ArrayList<Question> getAllQuestions() {
+    public static ArrayList<Question> getAllQuestions() {
         return allQuestions;
     }
 
@@ -410,6 +463,69 @@ public class Teacher extends Person {
         }
 
         return null;
+
+    }
+
+    public boolean retrieveQuestions() throws Exception {
+
+        System.out.println("retrieving questions...");
+        allQuestions = new ArrayList();
+
+        // teacher.id from teacher on database
+        try {
+            Connection conn = SimpleConnection.getConnection();
+
+            String sqlQuery = "SELECT teacher_id, question, a, b,c,d,e,picture,type "
+                    + "FROM exam_question INNER JOIN teacher ON exam_question.teacher_id = teacher.id "
+                    + "WHERE person_id = ? and course_id = ?";
+            PreparedStatement pStatement = conn.prepareStatement(sqlQuery);
+
+            pStatement.setString(1, this.getId());
+            pStatement.setInt(2, CardViewFXMLController.getCourseId());
+
+            ResultSet resultSet = pStatement.executeQuery();
+
+            if (resultSet.next()) {
+                resultSet.beforeFirst();
+                while (resultSet.next()) {
+
+                    Question q = new Question.Builder(resultSet.getString("question"), resultSet.getString("a"), resultSet.getString("b")).addC(resultSet.getString("c")).addD(resultSet.getString("d")).addE(resultSet.getString("e")).build();
+
+                    Blob foto = resultSet.getBlob("picture");
+
+                    if (foto != null) {
+                        InputStream is = foto.getBinaryStream();
+                        Image img;
+                        img = new Image(is);
+
+                        q.setImageProperty(img);
+                    }
+                    allQuestions.add(q);
+
+                    regId = resultSet.getInt("teacher_id");
+                }
+            }
+
+            conn.close();
+
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(Person.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+
+        //addToDatabase();
+        return true;
+    }
+
+    public boolean deleteFromDB(Connection conn) throws SQLException, ClassNotFoundException {
+
+        String sqlQuery = "DELETE FROM exam_question WHERE teacher_id = ?";
+        PreparedStatement pStatement = conn.prepareStatement(sqlQuery);
+
+        pStatement.setInt(1, regId);
+
+        System.out.println("Deleting regid:" + regId + " from db");
+        return pStatement.execute();
 
     }
 

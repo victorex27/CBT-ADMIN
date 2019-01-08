@@ -124,7 +124,7 @@ if (file.isDirectory() || (file == null)) {
                 Image image = new Image(file.toURI().toString());
                 imageViewForExamPicture.setImage(image);
                 
-                questionObject.setFilePath(filePath);
+                //questionObject.setFilePath(filePath);
                 
                 
                 }
@@ -140,7 +140,7 @@ if (file.isDirectory() || (file == null)) {
         Image image = new Image(getClass().getResource("image/book.png").toString(), true);
                 imageViewForExamPicture.setImage(image);
                 
-                questionObject.setFilePath(null);
+                //questionObject.setFilePath(null);
                 
         
     }

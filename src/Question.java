@@ -1,4 +1,6 @@
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.image.Image;
@@ -15,7 +17,7 @@ import org.apache.commons.io.FilenameUtils;
  */
 public class Question {
 
-    private StringProperty file;
+    
     private StringProperty question;
     private String deadline;
     private StringProperty a;
@@ -23,9 +25,29 @@ public class Question {
     private StringProperty c;
     private StringProperty d;
     private StringProperty e;
+    
     private Image image;
     private int id;
     private boolean theory;
+    private ObjectProperty<javafx.scene.image.Image> imageProperty = new SimpleObjectProperty<>();
+    
+    
+
+    public void setImageProperty(Image value) {
+       
+        imageProperty.set(value);
+
+    }
+    
+    public ObjectProperty<javafx.scene.image.Image> getImageProperty(){
+        
+        return imageProperty;
+    }
+    
+    public Image getImage(){
+        
+        return imageProperty.get();
+    }
 
     
 
@@ -37,7 +59,7 @@ public class Question {
         c = new SimpleStringProperty();
         d = new SimpleStringProperty();
         e = new SimpleStringProperty();
-        file = new SimpleStringProperty();
+               
 
     }
 
@@ -51,14 +73,7 @@ public class Question {
 
     }
 
-    public Image getImage() {
-        return image;
-    }
-
-    public void setImage(Image image) {
-        this.image = image;
-    }
-
+   
     public String getQuestion() {
 
         return question.get();
@@ -147,27 +162,6 @@ public class Question {
         return a== null && b== null && c== null && d== null && e== null;
     }
 
-    public void setFilePath(String _file) {
-
-        file.setValue(_file);
-
-    }
-
-    public String getFilePath() {
-
-        return file.get();
-    }
-
-    public StringProperty getFilePathProperty() {
-
-        return file;
-    }
-
-    public String getFileType() {
-
-        return FilenameUtils.getExtension(getFilePath());
-
-    }
 
     public void setDeadline(String deadline) {
         this.deadline = deadline;

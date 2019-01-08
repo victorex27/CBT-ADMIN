@@ -47,7 +47,15 @@ public class ReadingListFXMLController implements Initializable {
     @FXML
     private Label noResultLabel;
     private ObservableList<String> list;
-    Map<String, File> fileMap;
+    private Map<String, File> fileMap;
+    
+    private static THomeFXMLDocumentController parentController;
+    
+    public static void setParentController(THomeFXMLDocumentController _parentController){
+        
+        parentController = _parentController;
+        
+    }
 
     /**
      * Initializes the controller class.
@@ -58,13 +66,14 @@ public class ReadingListFXMLController implements Initializable {
         BackButtonController.setPrevious("CourseDefaultHomeFXML.fxml");
         fileMap = new HashMap<>();
 
+        
         listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 
                 if (Desktop.isDesktopSupported()) {
                     File file = fileMap.get(newValue);
-                    //Desktop.getDesktop().open(file);
+                    //
 
                     /**
                      * Make a modification to check if file exists then ask the
@@ -72,7 +81,13 @@ public class ReadingListFXMLController implements Initializable {
                      * (Modification not yet made)
                      */
                     fileMap.get(newValue).renameTo(new File(System.getProperty("user.home") + "//Documents//" + file.getName()));
-                    //System.out.println(new File(System.getProperty("user.home")+"//Documents//"+file.getName()).getAbsolutePath());
+                    
+                    try {
+                        Desktop.getDesktop().open(file);
+                    } catch (IOException ex) {
+                        Logger.getLogger(ReadingListFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
 
                 }
 

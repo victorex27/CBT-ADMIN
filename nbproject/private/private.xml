@@ -3,12 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/USER/Documents/NetBeansProjects/CBT/src/ExamChooserFXMLController.java</file>
             <file>file:/C:/Users/USER/Documents/NetBeansProjects/CBT/src/Person.java</file>
-            <file>file:/C:/Users/USER/Documents/NetBeansProjects/CBT/src/PermissionLevel.java</file>
-            <file>file:/C:/Users/USER/Documents/NetBeansProjects/CBT/src/Teacher.java</file>
-            <file>file:/C:/Users/USER/Documents/NetBeansProjects/CBT/src/Administrator.java</file>
-            <file>file:/C:/Users/USER/Documents/NetBeansProjects/CBT/src/LoginFXMLDocumentController.java</file>
-            <file>file:/C:/Users/USER/Documents/NetBeansProjects/CBT/src/THomeFXMLDocumentController.java</file>
+            <file>file:/C:/Users/USER/Documents/NetBeansProjects/CBT/src/QuestionDashboardFXMLController.java</file>
+            <file>file:/C:/Users/USER/Documents/NetBeansProjects/CBT/src/CourseDashboardFXMLController.java</file>
+            <file>file:/C:/Users/USER/Documents/NetBeansProjects/CBT/src/VBoxController.java</file>
+            <file>file:/C:/Users/USER/Documents/NetBeansProjects/CBT/src/Course.java</file>
+            <file>file:/C:/Users/USER/Documents/NetBeansProjects/CBT/src/CardViewFXMLController.java</file>
         </group>
     </open-files>
 </project-private>

@@ -1,35 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
-<?import javafx.scene.text.*?>
-<?import java.lang.*?>
-<?import java.net.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 
-<AnchorPane id="AnchorPane" prefHeight="768.0" prefWidth="1024.0" styleClass="background" stylesheets="@css/Login.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ScoreSheetDashboardFXMLController">
-    <children>
-        <fx:include source="FrameFXML.fxml" />
-      <Label fx:id="fullName" layoutX="220.0" layoutY="189.0" opacity="0.66" textFill="#f8f8f8">
-         <font>
-            <Font name="System Italic" size="31.0" />
-         </font>
-      </Label>
-      <Pane fx:id="rightPane" layoutX="272.0" layoutY="247.0" prefHeight="371.0" prefWidth="751.0">
+<AnchorPane id="AnchorPane" prefHeight="279.0" prefWidth="582.0" styleClass="background" stylesheets="@css/Login.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ScoreSheetDashboardFXMLController">
+   <children>
+      <Pane fx:id="rightPane" layoutX="2.0" prefHeight="318.0" prefWidth="579.0">
          <children>
-            <Label fx:id="courseCode" layoutX="171.0" layoutY="14.0" text="Course Code" />
-            <Button fx:id="submit" layoutX="573.0" layoutY="342.0" mnemonicParsing="false" text="Next" />
-            <Label fx:id="totalScore" layoutX="472.0" layoutY="14.0" text="Total Score" />
-            <ListView fx:id="eachStudentScript" layoutX="171.0" layoutY="40.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="290.0" prefWidth="454.0" />
-            <ListView fx:id="nameOfStudentsListView" layoutX="7.0" layoutY="40.0" prefHeight="290.0" prefWidth="136.0" />
+            <Label fx:id="courseCode" layoutX="177.0" layoutY="45.0" text="Course Code" />
+            <Label fx:id="totalScore" layoutX="438.0" layoutY="45.0" text="Total Score" />
+            <ListView fx:id="eachStudentScript" layoutX="177.0" layoutY="72.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="206.0" prefWidth="360.0" />
+            <ListView fx:id="nameOfStudentsListView" layoutX="14.0" layoutY="72.0" prefHeight="206.0" prefWidth="154.0" />
          </children>
       </Pane>
-      <Pane layoutX="813.0" layoutY="189.0" prefHeight="57.0" prefWidth="87.0">
-         <children>
-            <fx:include source="BackButton.fxml" />
-         </children>
-      </Pane>
-    </children>
+   </children>
 </AnchorPane>

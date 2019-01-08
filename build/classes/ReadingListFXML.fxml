@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
-<?import javafx.scene.text.*?>
-<?import java.lang.*?>
-<?import java.net.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="768.0" prefWidth="1054.0" styleClass="background" stylesheets="@css/Login.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ReadingListFXMLController">
-    
-    <children>
-        <fx:include source="FrameFXML.fxml" />
-      <Pane fx:id="rightPane" layoutX="235.0" layoutY="247.0" prefHeight="371.0" prefWidth="788.0">
+<AnchorPane id="AnchorPane" prefHeight="279.0" prefWidth="582.0" styleClass="background" stylesheets="@css/Login.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ReadingListFXMLController">
+   <children>
+      <Pane fx:id="rightPane" prefHeight="281.0" prefWidth="577.0">
          <children>
-            <ListView fx:id="listView" layoutX="14.0" layoutY="61.0" prefHeight="291.0" prefWidth="594.0" visible="false" />
+            <ListView fx:id="listView" layoutX="14.0" layoutY="61.0" prefHeight="215.0" prefWidth="556.0" visible="false">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></ListView>
             <Label fx:id="noResultLabel" layoutX="108.0" layoutY="54.0" text="No Result to Display" textFill="#cccaca" visible="false">
                <font>
                   <Font size="18.0" />
@@ -28,10 +27,5 @@
             </Label>
          </children>
       </Pane>
-      <Pane layoutX="906.0" layoutY="163.0" prefHeight="57.0" prefWidth="87.0">
-         <children>
-            <fx:include source="BackButton.fxml" />
-         </children>
-      </Pane>
-    </children>
+   </children>
 </AnchorPane>

@@ -82,4 +82,35 @@ public class Course {
         return course;
     }
     
+    public boolean isExamSet(String teacherId){
+    
+        try {
+            
+            
+            Connection connection = SimpleConnection.getConnection();
+            
+            PreparedStatement pStmt = connection.prepareStatement("SELECT  teacher.id as row "
+                + "FROM course INNER JOIN teacher ON teacher.course_id = course.id INNER JOIN exam_question ON exam_question.teacher_id = teacher.id WHERE course.id=? AND teacher.person_id=? LIMIT 1");
+            
+            
+            pStmt.setInt(1, id);
+            pStmt.setString(2, teacherId);
+            System.out.println("id is : "+id+"teacher id is "+teacherId);
+            ResultSet res = pStmt.executeQuery();
+            
+            if (res.first())
+                return true;
+            
+            
+            
+            
+            
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(Course.class.getName()).log(Level.SEVERE, null, ex);
+           
+        }
+    
+        return false;
+    }
+    
 }

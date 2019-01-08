@@ -114,7 +114,7 @@ public class AssignmentPaneFXMLController implements Initializable {
                     File file = new File(filePath);
                     stream = new FileInputStream(file);
                     String ext = FilenameUtils.getExtension(file.getAbsolutePath());
-                    pStatement.setInt(1, courseRegId);
+                    pStatement.setInt(1, student.getCourseRegId());
                     pStatement.setString(2, student.getFullName());
                     pStatement.setBinaryStream(3, stream, (int) (file.length()));
                     pStatement.setString(4, ext);

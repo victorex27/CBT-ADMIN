@@ -61,6 +61,7 @@ public class Person {
 
     protected void setPermission(String type) {
 
+        
         /**
          * SL: School Level. Those writing Post UTME UG: Under Graduate. LE: Can
          * upload files, set and mark exam questions but no access to create

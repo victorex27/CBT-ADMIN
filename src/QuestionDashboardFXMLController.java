@@ -168,6 +168,7 @@ public class QuestionDashboardFXMLController implements Initializable {
          * Clean this up*
          */
         FileChooser fileChooser = new FileChooser();
+       
         
         fileChooserButton.setOnAction((ActionEvent e) -> {
             
